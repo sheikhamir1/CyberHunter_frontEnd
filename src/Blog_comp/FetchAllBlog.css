@@ -1,0 +1,58 @@
+.AllBlogMainSetup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #f3d7b475;
+}
+.formSetupSelector {
+  background-color: #f3d7b475;
+}
+.AllBlogCardSetup {
+  /* width: 80%; */
+  display: inline-flex;
+  flex-wrap: nowrap;
+  margin: 20px;
+  overflow-y: scroll;
+
+  height: 350px;
+  width: 300px;
+  border: 2px solid rgba(13, 110, 253, 0.25);
+}
+.AllBlogImageSetup {
+  /* width: -webkit-fill-available; */
+  width: fit-content;
+}
+img {
+  /* height: 500px;
+  max-height: 600px; */
+  max-width: -webkit-fill-available;
+}
+.AllBlogCardTitle {
+  font-size: 14px;
+  font-weight: bold;
+}
+.SetUpdateAndDelete {
+  display: flex;
+  justify-content: flex-end;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 5px;
+  color: aqua;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #113a7050;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #16a7ac;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.AllBlogCardSetup.card {
+  height: 350px;
+}

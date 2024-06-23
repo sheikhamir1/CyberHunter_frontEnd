@@ -2,7 +2,7 @@
 import React, { useState, useContext } from "react";
 import { CreateContext1 } from "../AllContext/ContextOne";
 import { CreateContext2 } from "../AllContext/ContextTwo";
-import { CreateContext3 } from "../AllContext/ContextThree";
+// import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ import "./LoginStyle.css";
 function UserLogin() {
   const { Login } = useContext(CreateContext1);
   const { setTrackAllBlog } = useContext(CreateContext2);
-  const { setTrackProfile } = useContext(CreateContext3);
+  // const { setTrackProfile } = useContext(CreateContext3);
   const [show, setShowAlert] = useState(false);
   const [errorShow, setErrorShow] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
@@ -58,7 +58,7 @@ function UserLogin() {
 
       if (postResponse.success === true) {
         setTrackAllBlog((prev) => prev + 1);
-        setTrackProfile((prev) => prev + 1);
+        // setTrackProfile((prev) => prev + 1);
         const JWT_token = postResponse.authToken;
         // console.log("this is auth token", JWT_token);
 

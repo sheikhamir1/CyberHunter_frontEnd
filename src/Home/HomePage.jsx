@@ -1,14 +1,16 @@
 import React from "react";
+import PublicBlogs from "../Blog_comp/FetchPublicBlogs";
 // import Title from "./Title";
-// import PublicBlogs from "../../BlogPage/PublicBlogs";
-// import PrivateBlogs from "../../BlogPage/PrivateBlogs";
 
 function MyHomePage() {
   return (
     <>
       {" "}
-      {/* <Title /> */}
-      {/* <PublicBlogs /> */}
+      <h5 style={{ textAlign: "center" }}>
+        this site is under development feel free to use it, if found any bug or
+        problem please contact us
+      </h5>
+      <PublicBlogs />
     </>
   );
 }

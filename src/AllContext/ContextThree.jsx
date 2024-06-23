@@ -21,10 +21,10 @@ const CreateProvider3 = ({ children }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    GetUserProfile();
-    GEtImage();
-  }, [trackProfile]);
+  // useEffect(() => {
+  //   GetUserProfile();
+  //   GEtImage();
+  // }, [trackProfile]);
 
   //   ****************************************************************************************************************************************
   //  handle get all user profile

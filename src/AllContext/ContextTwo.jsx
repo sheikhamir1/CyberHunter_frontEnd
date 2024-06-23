@@ -1,12 +1,12 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { get } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-// import { CreateContext4 } from "./ContextFour";
+import { CreateContext4 } from "./ContextFour";
 
 const CreateContext2 = createContext();
 
 const CreateProvider2 = ({ children }) => {
-  // const { setTrackPublicBlog } = useContext(CreateContext4);
+  const { setTrackPublicBlog } = useContext(CreateContext4);
 
   // all states here
   const [allBlog, setAllBlog] = useState([]);
@@ -38,13 +38,16 @@ const CreateProvider2 = ({ children }) => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/api/blog/blog", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Auth-token": localStorage.getItem("token"),
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/blog/fetchblogs`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
       const data = await response.json();
       console.log("all blog ", data);
       // console.log("all blog ", data);
