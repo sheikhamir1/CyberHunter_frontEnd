@@ -1,6 +1,6 @@
 // all hooks
 import React, { useState, useContext } from "react";
-import { CreateContext2 } from "../../UsingContext/ContextTwo";
+import { CreateContext2 } from "../AllContext/ContextTwo";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 // Css
-import "../LoginUser/LoginStyle.css";
+import "./LoginStyle.css";
 
 function MyRegister() {
   const { setAgainFetchBlog } = useContext(CreateContext2);

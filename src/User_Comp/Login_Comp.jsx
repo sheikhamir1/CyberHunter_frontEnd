@@ -1,8 +1,8 @@
 // all hooks
 import React, { useState, useContext } from "react";
-import { CreateContext1 } from "../../UsingContext/ContextOne";
-import { CreateContext2 } from "../../UsingContext/ContextTwo";
-import { CreateContext3 } from "../../UsingContext/ContextThree";
+import { CreateContext1 } from "../AllContext/ContextOne";
+import { CreateContext2 } from "../AllContext/ContextTwo";
+import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { useNavigate } from "react-router-dom";
