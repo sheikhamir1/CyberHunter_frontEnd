@@ -1,18 +1,24 @@
+// all hooks
 import React, { useEffect, useState, useContext } from "react";
+import { CreateContext2 } from "../AllContext/ContextTwo";
+import { CreateContext3 } from "../AllContext/ContextThree";
+
+// libraries
+import { useForm } from "react-hook-form";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+
+// bootstrap components
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useForm, Controller } from "react-hook-form";
 import Alert from "react-bootstrap/Alert";
-import { Link, Outlet } from "react-router-dom";
-import { MdAccountCircle } from "react-icons/md";
-import { FaUnlockAlt } from "react-icons/fa";
-import { CreateContext2 } from "../UsingContext/ContextTwo";
-import { CreateContext3 } from "../UsingContext/ContextThree";
 
-function EditProfile() {
+// Css
+
+// icons
+import { MdAccountCircle } from "react-icons/md";
+
+function CreateProfile() {
   const {
-    UpdateProfile,
-    CreateProfile,
     show,
     errorShow,
     serverMsg,
@@ -21,74 +27,73 @@ function EditProfile() {
     setServerMsg,
     setServerError,
     setErrorShow,
+    setShowAlert,
   } = React.useContext(CreateContext3);
 
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
     reset,
-    setValue,
   } = useForm();
 
   //  start upload
-
   const onSubmit = async (data) => {
-    const body = {
-      username: data.username,
-      bio: data.bio,
-      age: data.age,
-      city: data.city,
-      country: data.country,
-      // profilePic: data.profilePic[0],
-    };
-
-    // console.log("this is body before send in context", body);
-
-    CreateProfile(body);
-
-    // console.log("on submite data include image", data);
     const formData = new FormData();
-    formData.append("profilePic", data.profilePic[0]);
+    formData.append("username", data.username);
+    formData.append("bio", data.bio);
+    formData.append("age", data.age);
+    formData.append("city", data.city);
+    formData.append("country", data.country);
+    formData.append("file", data.file[0]);
 
-    try {
-      const UploadImage = await fetch(
-        "http://localhost:3000/api/user/user-profile-picture",
-        {
-          method: "POST",
-          headers: {
-            //   "Content-Type": "image/jpeg",
-            "Auth-token": localStorage.getItem("token"),
-          },
-          body: formData,
-        }
-      );
-      const response = await UploadImage.json();
-      // console.log("this is image", response);
-      if (response.success === true) {
-        setTrackProfile((prev) => prev + 1);
-        console.log("image uploaded");
-        const serverMSG = response.msg;
-        setShowAlert(true);
-        window.scrollTo(0, 0);
-        setTimeout(() => {
-          setShowAlert(false);
-          // navigate("/profile");
-        }, 3000);
-        setServerMsg(serverMSG + " please Wait...");
-      } else if (data.success === false) {
-        const serverMSG = response.msg;
-        setErrorShow(true);
-        setTimeout(() => {
-          setErrorShow(false);
-        }, 3000);
-        setServerError(serverMSG);
+    const CreateProfile = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("Please login to create a profile");
+        return;
       }
-      setTrackProfile((prev) => prev + 1);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/user/Createprofile",
+          {
+            method: "POST",
+            headers: {
+              "Auth-token": localStorage.getItem("token"),
+            },
+            body: formData,
+          }
+        );
+        const responseData = await response.json();
+        if (responseData.success === true) {
+          console.log("User Profile created ");
+          setTrackProfile((prev) => prev + 1);
+          const serverMSG = responseData.msg;
+          setShowAlert(true);
+          window.scrollTo(0, 0);
+          setTimeout(() => {
+            setShowAlert(false);
+            navigate("/profile");
+          }, 3000);
+          setServerMsg(serverMSG + " please Wait...");
+        } else {
+          const serverMSG = responseData.msg;
+          setErrorShow(true);
+          window.scrollTo(0, 0);
+          setTimeout(() => {
+            setErrorShow(false);
+          }, 3000);
+          setServerError(serverMSG);
+        }
+      } catch (error) {
+        console.error("Error creating profile:", error);
+        // Handle fetch errors, show generic error message to user
+      }
+    };
+    CreateProfile();
+    reset();
   };
   return (
     <>
@@ -137,10 +142,10 @@ function EditProfile() {
           <Form.Label>Profile Picture</Form.Label>
 
           <Form.Control
-            name="profilePic"
+            name="file"
             type="file"
             placeholder="Upload profile picture"
-            {...register("profilePic")}
+            {...register("file")}
           />
         </Form.Group>
 
@@ -261,4 +266,4 @@ function EditProfile() {
   );
 }
 
-export default EditProfile;
+export default CreateProfile;

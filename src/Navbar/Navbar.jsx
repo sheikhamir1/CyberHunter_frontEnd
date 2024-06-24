@@ -74,7 +74,7 @@ function MyNavbar() {
                   <NavDropdown.Item as={Link} to="/allblog">
                     View Your Blogs
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/editprofile">
+                  <NavDropdown.Item as={Link} to="/createprofile">
                     Create & update Profile
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to="/profile">

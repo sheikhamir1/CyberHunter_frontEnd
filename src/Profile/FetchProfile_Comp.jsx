@@ -1,6 +1,6 @@
 // all hooks
 import React, { useEffect, useState } from "react";
-import { CreateContext3 } from "../UsingContext/ContextThree";
+import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { format } from "date-fns";
@@ -54,7 +54,7 @@ function Profile() {
       }
     };
 
-    GetUserEmail();
+    // GetUserEmail();
   }, []);
 
   if (profile.length === 0) {
@@ -119,7 +119,7 @@ function Profile() {
                     }}
                   >
                     <Image
-                      src={profilePicture}
+                      src={profile.url}
                       // roundedCircle
                       style={{
                         height: "-webkit-fill-available",
@@ -178,13 +178,6 @@ function Profile() {
                 <Card.Text>
                   <strong>UpdatedAt : </strong> <strong>{isoUpdatedAt}</strong>
                 </Card.Text>
-                {/* <Link
-                  style={{ textDecoration: "none", color: "rgb(227 3 3)" }}
-                  to="editprofile"
-                >
-                  Edit Profile <TbUserEdit />
-                </Link>
-                <Outlet /> */}
                 <Outlet />
               </Card.Body>
             </Card>

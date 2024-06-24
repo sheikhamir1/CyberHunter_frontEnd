@@ -21,10 +21,10 @@ import SingleBlogPage from "./Blog_comp/ViewSingleBlog";
 import SinglePublicBlog from "./Blog_comp/ViewPublicSingleBlog";
 
 // profile components
-// import Profile from "./BlogPage/Profile";
-// import EditProfile from "./BlogPage/EditProfile";
+import Profile from "./Profile/FetchProfile_Comp";
+import CreateProfile from "./Profile/CreateProfile_Comp";
 // import EditAccount from "./BlogPage/EditAccount";
-// import UpdateProfile from "./BlogPage/UpdateProfile";
+import UpdateProfile from "./Profile/UpdateProfile_Comp";
 
 //other components
 import MyNavbar from "./Navbar/Navbar";
@@ -56,14 +56,14 @@ function App() {
                       element={<SinglePublicBlog />}
                     />
                     <Route path="/updateblog" element={<UpdateBlog />} />
-                    {/* <Route path="/updateprofile" element={<UpdateProfile />} /> */}
-                    {/* <Route
-                      path="/editprofile"
-                      element={<EditProfile />}
-                    ></Route> */}
-                    {/* <Route path="/profile" element={<Profile />} />
-                    <Route path="/editaccount" element={<EditAccount />} />
-                    <Route path="/resetpass" element={<ResetPass />} /> */}
+                    <Route path="/updateprofile" element={<UpdateProfile />} />
+                    <Route
+                      path="/CreateProfile"
+                      element={<CreateProfile />}
+                    ></Route>
+                    <Route path="/profile" element={<Profile />} />
+                    {/* <Route path="/editaccount" element={<EditAccount />} /> */}
+                    {/* <Route path="/resetpass" element={<ResetPass />} /> */}
                   </Routes>
                 </CreateProvider5>
               </CreateProvider3>

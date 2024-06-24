@@ -1,6 +1,6 @@
 // all hooks
 import React, { useEffect, useState } from "react";
-import { CreateContext3 } from "../UsingContext/ContextThree";
+import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { useForm } from "react-hook-form";
