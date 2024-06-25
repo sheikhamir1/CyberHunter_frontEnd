@@ -34,13 +34,9 @@ function PrivateBlogs() {
   } = useContext(CreateContext2);
 
   const { setTrackPublicBlog } = useContext(CreateContext4);
-  // const [privateCheck, setPrivateCheck] = useState(false);
 
-  // console.log("all private blog", allPrivateBlog);
   const handleDelete = (id) => {
     DeleteBlog(id);
-
-    // setTrackDeleteBlog((prev) => prev + 1);
     // setTrackPublicBlog((prev) => prev + 1);
   };
 
@@ -61,7 +57,6 @@ function PrivateBlogs() {
 
   return (
     <>
-      {/* <div>PrivateBlogs</div> */}
       {show && (
         <Alert variant="success" style={{ textAlign: "center", margin: "0px" }}>
           {serverMsg}
@@ -132,11 +127,9 @@ function PrivateBlogs() {
                   />
                 </Link>
                 <Link>
-                  {/* <Link as={Link} to={`/allblog/${blog._id}`}> */}
                   <MdDeleteSweep
                     title="Click to Delete this blog"
                     onClick={() => handleDelete(blog._id)}
-                    // onClick={() => DeleteBlog(blog._id)}
                     style={{
                       fontSize: "22px",
                       cursor: "pointer",
@@ -213,10 +206,6 @@ function PrivateBlogs() {
                   <strong>{blog.author.fullName}</strong>
                 </Card.Title>
 
-                {/* <Card.Title className="AllBlogCardTitle">
-                  <strong>publicAt : </strong>
-                  <strong>{isoPublicAt}</strong>
-                </Card.Title> */}
                 <Card.Text>
                   <strong style={{ fontSize: "12px", fontWeight: "bold" }}>
                     This Post is :{" "}

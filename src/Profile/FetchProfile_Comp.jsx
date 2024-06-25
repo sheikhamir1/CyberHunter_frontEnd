@@ -21,8 +21,7 @@ import { FiAtSign } from "react-icons/fi";
 import { FiEdit3 } from "react-icons/fi";
 
 function Profile() {
-  const { profile, emptyProfile, GetId, setTrackProfile } =
-    React.useContext(CreateContext3);
+  const { profile, emptyProfile, GetId } = React.useContext(CreateContext3);
   const [email, setEmail] = useState([]);
 
   useEffect(() => {

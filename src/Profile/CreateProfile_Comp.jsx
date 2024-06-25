@@ -1,6 +1,5 @@
 // all hooks
-import React, { useEffect, useState, useContext } from "react";
-import { CreateContext2 } from "../AllContext/ContextTwo";
+import React, { useContext } from "react";
 import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
@@ -34,7 +33,6 @@ function CreateProfile() {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
     reset,
   } = useForm();
@@ -78,7 +76,8 @@ function CreateProfile() {
             navigate("/profile");
           }, 3000);
           setServerMsg(serverMSG + " please Wait...");
-        } else {
+        } else if (responseData.success === false) {
+          console.log("User Profile cration failed ");
           const serverMSG = responseData.msg;
           setErrorShow(true);
           window.scrollTo(0, 0);
@@ -89,7 +88,6 @@ function CreateProfile() {
         }
       } catch (error) {
         console.error("Error creating profile:", error);
-        // Handle fetch errors, show generic error message to user
       }
     };
     CreateProfile();

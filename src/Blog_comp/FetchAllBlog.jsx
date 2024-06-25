@@ -35,10 +35,7 @@ function AllBlog() {
     errorShow,
     serverMsg,
     serverError,
-    // setTrackDeleteBlog,
     setTrackAllBlog,
-    // setAgainFetchBlog,
-    // getPrivateBlog,
   } = useContext(CreateContext2);
 
   const { setTrackPublicBlog } = useContext(CreateContext4);
@@ -52,9 +49,7 @@ function AllBlog() {
 
   const handleDelete = (id) => {
     DeleteBlog(id);
-
-    // setTrackDeleteBlog((prev) => prev + 1);
-    // setTrackPublicBlog((prev) => prev + 1);
+    setTrackPublicBlog((prev) => prev + 1);
   };
 
   if (allBlog.length === 0) {
@@ -70,23 +65,18 @@ function AllBlog() {
   const handleReadMore = () => {
     setTrackAllBlog((prev) => prev + 1);
     // setTrackPublicBlog((prev) => prev + 1);
-    // setAgainFetchBlog((prev) => prev + 1);
   };
 
   const onSubmit = async (data) => {
-    // console.log(data);
-
     if (data.options === "See Private Blog") {
       setTrackAllBlog((prev) => prev + 1);
       setShowPrivate(true);
-      // getPrivateBlog();
     } else if (data.options === "See All Blog") {
       setShowPrivate(false);
     }
   };
 
   const HandleUpdate = (id, body) => {
-    // console.log("this is id and body", id, body);
     setTrackAllBlog((prev) => prev + 1);
     GetBlogId(id, body);
   };

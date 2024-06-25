@@ -11,7 +11,6 @@ const CreateProvider4 = ({ children }) => {
 
   //  handle public blog
   // from here
-
   useEffect(() => {
     PublicBlog();
   }, []);
@@ -29,8 +28,13 @@ const CreateProvider4 = ({ children }) => {
     });
 
     const data = await response.json();
-    console.log("all Public blog fetched in contextfour", data);
-    setPublicBlog(data.data);
+    // console.log("all Public blog fetched in contextfour", data);
+    if (data.success === true) {
+      console.log("public blog fetched");
+      setPublicBlog(data.data);
+    } else if (data.success === false) {
+      console.log("public blog fetch failed");
+    }
   };
 
   return (

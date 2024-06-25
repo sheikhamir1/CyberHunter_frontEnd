@@ -17,22 +17,12 @@ import { IoPricetags } from "react-icons/io5";
 function PublicBlogs() {
   const { publicBlog } = useContext(CreateContext4);
 
-  console.log("this is public blog in publicBlogs", publicBlog);
+  // console.log("this is public blog in publicBlogs", publicBlog);
 
   if (!publicBlog) return <h1 style={{ textAlign: "center" }}>loading</h1>;
 
   return (
     <>
-      {/* <h1
-        style={{
-          textAlign: "center",
-          backgroundColor: " #f3d7b475",
-          margin: "0px",
-        }}
-      >
-        All PublicBlogs
-      </h1> */}
-
       <div className="AllBlogMainSetup">
         {publicBlog.map((blog) => {
           const isoCreatedAt = format(

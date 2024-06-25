@@ -47,14 +47,18 @@ const CreateProvider3 = ({ children }) => {
       );
 
       const data = await response.json();
+      // console.log("this is profile", data);
       if (data.userProfile.length === 0) {
         console.log("Empty profile");
       }
-      setProfile(data.userProfile);
-      // console.log("this is profile", profile);
+      if (data.success === true) {
+        console.log("Profile fetched");
+        setProfile(data.userProfile);
+      } else if (data.success === false) {
+        console.log("Profile fetched failed");
+      }
     } catch (error) {
       console.error("Error fetching blog:", error);
-      // setError(error);
     }
   };
 

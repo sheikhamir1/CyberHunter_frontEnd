@@ -23,20 +23,13 @@ import { FaTags } from "react-icons/fa6";
 import { MdNoteAdd } from "react-icons/md";
 
 function CreateBlog() {
-  const {
-    CreateBlog,
-    show,
-    errorShow,
-    serverMsg,
-    serverError,
-    setTrackAllBlog,
-  } = useContext(CreateContext2);
+  const { CreateBlog, show, errorShow, serverMsg, serverError } =
+    useContext(CreateContext2);
 
   const { setTrackPublicBlog } = useContext(CreateContext4);
 
   const [tags, setAddtags] = useState([]);
   const [content, setContent] = useState("");
-  // console.log("this is content useState", content);
 
   const {
     register: registerForm2,
@@ -50,11 +43,7 @@ function CreateBlog() {
 
   const onSubmit2 = async (data) => {
     setAddtags([...tags, data.tags]);
-
     resetForm2();
-    // setTrackPublicBlog((prev) => prev + 1);
-    // console.log("this is onsubmit2", data);
-    // console.log("this is addTags", tags);
   };
 
   const {
@@ -68,10 +57,6 @@ function CreateBlog() {
     const title = data.title;
     const categories = data.categories;
     const isPublic = data.isPublic;
-
-    // console.log("this is addTags", tags);
-
-    // console.log("this is onsubmit1", data);
 
     const body = {
       title,
@@ -88,8 +73,6 @@ function CreateBlog() {
     reset1();
     setContent("");
     setAddtags([]);
-    setTrackAllBlog((prev) => prev + 1);
-    setTrackPublicBlog((prev) => prev + 1);
   };
 
   return (

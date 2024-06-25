@@ -2,7 +2,7 @@
 import React, { useState, useContext } from "react";
 import { CreateContext1 } from "../AllContext/ContextOne";
 import { CreateContext2 } from "../AllContext/ContextTwo";
-// import { CreateContext3 } from "../AllContext/ContextThree";
+import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { useNavigate } from "react-router-dom";
@@ -14,13 +14,12 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 
 // Css
-
 import "./LoginStyle.css";
 
 function UserLogin() {
   const { Login } = useContext(CreateContext1);
   const { setTrackAllBlog } = useContext(CreateContext2);
-  // const { setTrackProfile } = useContext(CreateContext3);
+  const { setTrackProfile } = useContext(CreateContext3);
   const [show, setShowAlert] = useState(false);
   const [errorShow, setErrorShow] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
@@ -34,11 +33,7 @@ function UserLogin() {
     reset,
   } = useForm();
 
-  // console.log("checking if token is there : ", localStorage.getItem("token"));
-
   const onSubmit = async (data) => {
-    // console.log(data);
-
     try {
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -55,26 +50,23 @@ function UserLogin() {
 
       const postResponse = await response.json();
       // console.log(postResponse);
-
       if (postResponse.success === true) {
+        console.log("user logged in");
         setTrackAllBlog((prev) => prev + 1);
-        // setTrackProfile((prev) => prev + 1);
+        setTrackProfile((prev) => prev + 1);
         const JWT_token = postResponse.authToken;
         // console.log("this is auth token", JWT_token);
-
         localStorage.setItem("token", JWT_token);
         const serverMSG = postResponse.message;
         setShowAlert(true);
         setTimeout(() => {
           setShowAlert(false);
           Login();
-          console.log("user logged in");
           navigate("/allblog");
-          // navigate("/");
         }, 3000);
         setServerMsg(serverMSG);
-        // console.log("this is server msg :", serverMSG);
       } else if (postResponse.success === false) {
+        console.log("user login failed");
         setErrorShow(true);
         setTimeout(() => {
           setErrorShow(false);

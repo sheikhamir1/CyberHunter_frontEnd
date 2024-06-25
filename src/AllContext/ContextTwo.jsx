@@ -30,7 +30,6 @@ const CreateProvider2 = ({ children }) => {
   // *************************************************************************************************************************************************************************************************************************************************************************
   // Handle Get all blog
   // from here
-  // useEffect(() => {
   const GetAllBlog = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -49,9 +48,13 @@ const CreateProvider2 = ({ children }) => {
         }
       );
       const data = await response.json();
-      console.log("all blog ", data);
       // console.log("all blog ", data);
-      setAllBlog(data.data);
+      if (data.success === true) {
+        console.log("All blog fetched");
+        setAllBlog(data.data);
+      } else if (data.success === false) {
+        console.log("All blog fetch failed");
+      }
     } catch (error) {
       console.log("there is no blog found", error);
     }
@@ -80,20 +83,22 @@ const CreateProvider2 = ({ children }) => {
       );
       const data = await response.json();
       // console.log("all private blog fetched", data);
-      setAllPrivateBlog(data.privetBlog);
+      if (data.success === true) {
+        console.log("private blog fetched");
+        setAllPrivateBlog(data.privetBlog);
+      } else if (data.success === false) {
+        console.log("private blog fetch failed");
+      }
     } catch (error) {
-      console.log("there is no blog found");
+      console.log("there is no blog found", error);
     }
   };
-  // console.log("all private blog", allPrivateBlog);
 
   useEffect(() => {
     getPrivateBlog();
   }, []);
 
-  // }, [againFetchBlog]);
-
-  // ******************************************************************************************************************************************************************************************************************************************************************
+  //******************************************************************************************************************************************************************************************************************************************************************
   // Handle Create blog
   // from here
 
@@ -103,9 +108,6 @@ const CreateProvider2 = ({ children }) => {
       console.warn("Please login to create a blog");
       return;
     }
-
-    // console.log("this is body incontext", blogBody);
-
     try {
       const response = await fetch(
         "http://localhost:3000/api/blog/createblog",
@@ -118,13 +120,10 @@ const CreateProvider2 = ({ children }) => {
           body: JSON.stringify(blogBody),
         }
       );
-      // console.log("this is body incontext", blogBody);
-
       const data = await response.json();
       // console.log("this is create blog", data);
-      console.log("blog created");
-
       if (data.success === true) {
+        console.log("blog created");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
         const serverMSG = data.msg;
@@ -136,6 +135,7 @@ const CreateProvider2 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        console.log("blog creation failed");
         setErrorShow(true);
         setTimeout(() => {
           setErrorShow(false);
@@ -155,7 +155,6 @@ const CreateProvider2 = ({ children }) => {
     setUpdateBlogId(id);
     setUpdateBlogBody(boldBody);
   };
-  // console.log("this is id", UpdateBlogId);
 
   const handleUpdateBlog = async (blogBody) => {
     const token = localStorage.getItem("token");
@@ -163,7 +162,6 @@ const CreateProvider2 = ({ children }) => {
       console.warn("Please login to update a blog");
       return;
     }
-
     try {
       const response = await fetch(
         `http://localhost:3000/api/blog/updateblog/${UpdateBlogId}`,
@@ -178,8 +176,8 @@ const CreateProvider2 = ({ children }) => {
       );
       const data = await response.json();
       // console.log("this is update blog", data);
-      console.log("blog updated");
       if (data.success === true) {
+        console.log("blog updated");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
         const serverMSG = data.msg;
@@ -191,6 +189,7 @@ const CreateProvider2 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        console.log("blog updated failed");
         setErrorShow(true);
         setTimeout(() => {
           setErrorShow(false);
@@ -226,9 +225,9 @@ const CreateProvider2 = ({ children }) => {
       const data = await response.json();
       // console.log("this is delete blog", data);
       if (data.success === true) {
+        console.log("blog deleted");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
-        console.log("blog deleted");
         const serverMSG = data.msg;
         setShowAlert(true);
         window.scrollTo(0, 0);
@@ -236,14 +235,15 @@ const CreateProvider2 = ({ children }) => {
           setShowAlert(false);
           navigate("/allblog");
         }, 3000);
-        setTrackDeleteBlog((prev) => prev + 1);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        console.log("blog deleted failed");
+        const serverMSG = data.msg;
         setErrorShow(true);
         setTimeout(() => {
           setErrorShow(false);
         }, 3000);
-        setServerError("something went wrong please try again");
+        setServerError(serverMSG);
       }
     } catch (error) {
       console.log(error);
@@ -256,7 +256,7 @@ const CreateProvider2 = ({ children }) => {
     const token = localStorage.getItem("token");
     if (token) {
       GetAllBlog();
-      console.log("fetching all blog when user is login");
+      // console.log("fetching all blog when user is login");
     }
   }, []);
 

@@ -47,15 +47,10 @@ function SingleBlogPage() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     reset,
     setValue,
   } = useForm();
-
-  // useEffect(() => {
-  //   setValue("text", comments.content);
-  // }, []);
 
   const [showComment, setShowComment] = useState(false);
   const [comments, setComments] = useState([]);
@@ -117,7 +112,6 @@ function SingleBlogPage() {
 
   const handleDelete = (id) => {
     DeleteBlog(id);
-    setTrackDeleteBlog((prev) => prev + 1);
   };
 
   const isoCreatedAt = format(
@@ -221,11 +215,9 @@ function SingleBlogPage() {
                   />
                 </Link>
                 <Link>
-                  {/* <Link as={Link} to={`/allblog/${blog._id}`}> */}
                   <MdDeleteSweep
                     title="Click to Delete this blog"
                     onClick={() => handleDelete(DetailBlog._id)}
-                    // onClick={() => DeleteBlog(blog._id)}
                     style={{
                       fontSize: "22px",
                       cursor: "pointer",
@@ -250,7 +242,6 @@ function SingleBlogPage() {
               dangerouslySetInnerHTML={{ __html: DetailBlog.content }}
               // className="AllBlogImageSetup"
               style={{
-                // height: "auto",
                 maxWidth: "-webkit-fill-available",
                 width: "500px",
               }}

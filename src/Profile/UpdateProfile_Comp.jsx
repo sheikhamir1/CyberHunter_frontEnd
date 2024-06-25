@@ -1,5 +1,5 @@
 // all hooks
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
@@ -40,7 +40,6 @@ function UpdateProfile() {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
     setValue,
   } = useForm();
 
@@ -55,7 +54,6 @@ function UpdateProfile() {
   }, [getProfileBody, setValue]);
 
   const onSubmit = async (data) => {
-    // console.log(data);
     const formData = new FormData();
     formData.append("username", data.username);
     formData.append("bio", data.bio);
@@ -75,7 +73,6 @@ function UpdateProfile() {
         console.warn("Please login to Update a profile");
         return;
       }
-
       try {
         const response = await fetch(
           `http://localhost:3000/api/user/profileupdate/${getProfileId}`,
@@ -102,6 +99,7 @@ function UpdateProfile() {
           }, 3000);
           setServerMsg(serverMSG + " please Wait...");
         } else if (response2.success === false) {
+          console.log("User Profile updated failed ");
           const serverMSG = response2.msg;
           setErrorShow(true);
           setTimeout(() => {

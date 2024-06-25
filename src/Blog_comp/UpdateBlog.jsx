@@ -14,8 +14,6 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
-// Css
-
 // icons
 import { TfiWrite } from "react-icons/tfi";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -31,23 +29,18 @@ function UpdateBlog() {
     serverMsg,
     serverError,
     handleUpdateBlog,
-    setTrackUpdateBlog,
   } = useContext(CreateContext2);
 
   const { setTrackPublicBlog } = useContext(CreateContext4);
 
   const [tags, setAddtags] = useState([]);
   const [content, setContent] = useState("");
-  // console.log("this is update blog body", updateBlogBody);
+
   const {
     register: registerForm2,
     handleSubmit: handleSubmitForm2,
     reset: resetForm2,
-  } = useForm({
-    // defaultValues: {
-    //   tags: updateBlogBody.tags,
-    // },
-  });
+  } = useForm();
 
   const removeTag = (indexToRemove) => {
     setAddtags(tags.filter((_, index) => index !== indexToRemove));
@@ -99,12 +92,6 @@ function UpdateBlog() {
     setContent("");
     setAddtags([]);
   };
-
-  // if (UpdateBlogId) {
-  //   console.log("this is id in update blog", UpdateBlogId);
-
-  //   console.log("this is body incontext", updateBlogBody);
-  // }
 
   return (
     <>

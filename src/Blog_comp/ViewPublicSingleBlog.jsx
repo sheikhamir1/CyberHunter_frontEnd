@@ -89,11 +89,6 @@ function SinglePublicBlog() {
     "dd/MM/yyyy" + " " + "HH:mm:ss"
   );
 
-  // const isoPublicAt = format(
-  //   new Date(allPublicBlog.publicAt),
-  //   "dd/MM/yyyy" + " " + "HH:mm:ss"
-  // );
-
   const handleLike = (id) => {
     // console.log("this is id:", id);
     if (localStorage.getItem("token")) {
@@ -125,7 +120,6 @@ function SinglePublicBlog() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     reset,
   } = useForm();
@@ -153,7 +147,6 @@ function SinglePublicBlog() {
               dangerouslySetInnerHTML={{ __html: allPublicBlog.content }}
               // className="AllBlogImageSetup"
               style={{
-                // height: "auto",
                 maxWidth: "-webkit-fill-available",
                 width: "500px",
               }}
@@ -208,10 +201,6 @@ function SinglePublicBlog() {
                 {allPublicBlog.isPublic ? "Public" : "Privet"}
               </strong>
             </Card.Text>
-            {/* <Card.Title className="AllBlogCardTitle">
-              <strong>publicAt : </strong>
-              <strong>{isoPublicAt}</strong>
-            </Card.Title> */}
           </Card.Body>
           <div
             className="setiup"

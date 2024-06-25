@@ -2,8 +2,7 @@
 
 import { useContext } from "react";
 import { CreateContext1 } from "../AllContext/ContextOne";
-// import { CreateContext3 } from "../../UsingContext/ContextThree";
-// import { CreateContext4 } from "../../UsingContext/ContextFour";
+import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { Link } from "react-router-dom";
@@ -25,18 +24,15 @@ import { FaSignInAlt } from "react-icons/fa";
 import { FiArrowUpCircle } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import { MdNoteAdd } from "react-icons/md";
 
 function MyNavbar() {
   const { isLoggedIn, logout } = useContext(CreateContext1);
-  // const { setTrackProfile } = useContext(CreateContext3);
-  // const { setAgainFetchBlog } = useContext(CreateContext4);
+  const { setTrackProfile } = useContext(CreateContext3);
 
   const HandleClick = () => {
     logout();
     console.log("user logout");
     setTrackProfile((prev) => prev + 1);
-    setAgainFetchBlog((prev) => prev + 1);
   };
 
   return (
@@ -75,7 +71,7 @@ function MyNavbar() {
                     View Your Blogs
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to="/createprofile">
-                    Create & update Profile
+                    Create New Profile
                   </NavDropdown.Item>
                   <NavDropdown.Item as={Link} to="/profile">
                     view Profile

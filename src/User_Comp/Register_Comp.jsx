@@ -29,10 +29,7 @@ function MyRegister() {
     reset,
   } = useForm();
 
-  //   console.log("checking if token is there : ", localStorage.getItem("token"));
-
   const onSubmit = async (data) => {
-    // console.log(data);
     try {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
@@ -51,11 +48,10 @@ function MyRegister() {
 
       const postResponse = await response.json();
       // console.log(postResponse);
-
       if (postResponse.success === true) {
+        console.log("user registered");
         const JWT_token = postResponse.authToken;
         // console.log("this is auth token", JWT_token);
-
         localStorage.setItem("token", JWT_token);
         const serverMSG = postResponse.message;
         setShowAlert(true);
@@ -66,8 +62,8 @@ function MyRegister() {
           setAgainFetchBlog((prev) => prev + 1);
         }, 3000);
         setServerMsg(serverMSG + " please login...");
-        // console.log("this is server msg :", serverMSG);
       } else if (postResponse.success === false) {
+        console.log("user registertion failed");
         setErrorShow(true);
         setTimeout(() => {
           setErrorShow(false);
