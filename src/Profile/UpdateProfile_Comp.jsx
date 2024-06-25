@@ -15,34 +15,34 @@ import Alert from "react-bootstrap/Alert";
 
 // icons
 import { MdAccountCircle } from "react-icons/md";
-import { FaUnlockAlt } from "react-icons/fa";
 
 function UpdateProfile() {
   const {
-    UpdateProfile,
+    setTrackProfile,
+    setShowAlert,
     getProfileId,
     getProfileBody,
     show,
     errorShow,
     serverMsg,
     serverError,
+    setErrorShow,
+    setServerMsg,
+    setServerError,
   } = React.useContext(CreateContext3);
 
   //   console.log("this is getProfileBody", getProfileBody);
   //   console.log("this is getProfileId", getProfileId);
 
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
-    reset,
+    // reset,
     setValue,
   } = useForm();
-
-  //  start upload
 
   useEffect(() => {
     if (getProfileBody) {
@@ -51,44 +51,71 @@ function UpdateProfile() {
       setValue("age", getProfileBody.age);
       setValue("city", getProfileBody.city);
       setValue("country", getProfileBody.country);
-      setValue("profilePic", getProfileBody.profilePic);
     }
   }, [getProfileBody, setValue]);
 
   const onSubmit = async (data) => {
-    const updateBody = {
-      username: data.username,
-      bio: data.bio,
-      age: data.age,
-      city: data.city,
-      country: data.country,
-      // profilePic: data.profilePic[0],
-    };
-
-    // console.log("this is body before send in context", body);
-    UpdateProfile(updateBody);
-
-    // UpdateProfile(body, picture);
-
-    // console.log("on submite data include image", data);
+    // console.log(data);
     const formData = new FormData();
-    formData.append("profilePic", data.profilePic[0]);
+    formData.append("username", data.username);
+    formData.append("bio", data.bio);
+    formData.append("age", data.age);
+    formData.append("city", data.city);
+    formData.append("country", data.country);
+    formData.append("file", data.file[0]);
 
-    const UploadImage = await fetch(
-      "http://localhost:3000/api/user/user-profile-picture-update",
-      {
-        method: "PUT",
-        headers: {
-          //   "Content-Type": "image/jpeg",
-          "Auth-token": localStorage.getItem("token"),
-        },
-        body: formData,
+    // check the formData
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+
+    const ProfileUpdateApi = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("Please login to Update a profile");
+        return;
       }
-    );
-    const response = await UploadImage.json();
-    console.log("image Updated");
-    // console.log("this is image", response);
+
+      try {
+        const response = await fetch(
+          `http://localhost:3000/api/user/profileupdate/${getProfileId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Auth-token": localStorage.getItem("token"),
+            },
+            body: formData,
+          }
+        );
+        const response2 = await response.json();
+        // console.log("this is update profile result", response2);
+
+        if (response2.success === true) {
+          console.log("User Profile updated ");
+          setTrackProfile((prev) => prev + 1);
+          const serverMSG = response2.msg;
+          window.scrollTo(0, 0);
+          setShowAlert(true);
+          setTimeout(() => {
+            setShowAlert(false);
+            navigate("/profile");
+          }, 3000);
+          setServerMsg(serverMSG + " please Wait...");
+        } else if (response2.success === false) {
+          const serverMSG = response2.msg;
+          setErrorShow(true);
+          setTimeout(() => {
+            setErrorShow(false);
+          }, 3000);
+          setServerError(serverMSG);
+        }
+      } catch (error) {
+        console.error("Error Updating profile:", error);
+      }
+    };
+    ProfileUpdateApi();
   };
+
   return (
     <>
       {show && (
@@ -138,10 +165,10 @@ function UpdateProfile() {
           <Form.Label>Update Profile Picture</Form.Label>
 
           <Form.Control
-            name="profilePic"
+            name="file"
             type="file"
             placeholder="Upload profile picture"
-            {...register("profilePic")}
+            {...register("file")}
           />
         </Form.Group>
 
