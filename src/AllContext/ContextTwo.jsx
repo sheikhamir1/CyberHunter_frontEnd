@@ -284,6 +284,8 @@ const CreateProvider2 = ({ children }) => {
         getPrivateBlog,
         allPrivateBlog,
         setShowAlert,
+        setErrorShow,
+        setServerError,
       }}
     >
       {children}

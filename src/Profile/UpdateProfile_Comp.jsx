@@ -143,9 +143,9 @@ function UpdateProfile() {
             color: "rgb(227 3 3)",
             margin: "5px",
           }}
-          to="/editaccount"
+          to="/UpdateEmail_Comp"
         >
-          Edit Account <MdAccountCircle />
+          Update Email <MdAccountCircle />
         </Link>
       </div>
 

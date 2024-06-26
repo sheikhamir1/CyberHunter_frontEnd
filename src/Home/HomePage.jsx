@@ -8,7 +8,7 @@ function MyHomePage() {
       {" "}
       <h5 style={{ textAlign: "center" }}>
         this site is under development feel free to use it, if found any bug or
-        problem please contact us
+        problem please report us
       </h5>
       <PublicBlogs />
     </>

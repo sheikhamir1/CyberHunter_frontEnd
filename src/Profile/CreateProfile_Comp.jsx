@@ -11,8 +11,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 
-// Css
-
 // icons
 import { MdAccountCircle } from "react-icons/md";
 
@@ -122,9 +120,9 @@ function CreateProfile() {
             color: "rgb(227 3 3)",
             margin: "5px",
           }}
-          to="/editaccount"
+          to="/UpdateEmail_Comp"
         >
-          Edit Account <MdAccountCircle />
+          Update Email <MdAccountCircle />
         </Link>
       </div>
 

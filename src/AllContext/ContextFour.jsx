@@ -1,16 +1,26 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
+import { CreateContext3 } from "./ContextThree";
+import { useNavigate } from "react-router-dom";
 
 const CreateContext4 = createContext();
 
 const CreateProvider4 = ({ children }) => {
+  const { fetchprofile } = useContext(CreateContext3);
   //  all state here
   const [publicBlog, setPublicBlog] = useState([]);
 
+  // all alerts
+  const [show, setShowAlert] = useState(false);
+  const [errorShow, setErrorShow] = useState(false);
+  const [serverMsg, setServerMsg] = useState("");
+  const [serverError, setServerError] = useState("");
+
   //   track the states
   const [trackPublicBlog, setTrackPublicBlog] = useState(0);
+  const [trackUpdateEmail, setTrackUpdateEmail] = useState(0);
 
-  //  handle public blog
-  // from here
+  const navigate = useNavigate();
+
   useEffect(() => {
     PublicBlog();
   }, []);
@@ -19,6 +29,12 @@ const CreateProvider4 = ({ children }) => {
     PublicBlog();
   }, [trackPublicBlog]);
 
+  useEffect(() => {
+    fetchprofile();
+  }, [trackUpdateEmail]);
+
+  //  handle public blog
+  // from here
   const PublicBlog = async () => {
     const response = await fetch("http://localhost:3000/api/blog/publicblog", {
       method: "GET",
@@ -26,7 +42,6 @@ const CreateProvider4 = ({ children }) => {
         "Content-Type": "application/json",
       },
     });
-
     const data = await response.json();
     // console.log("all Public blog fetched in contextfour", data);
     if (data.success === true) {
@@ -37,11 +52,62 @@ const CreateProvider4 = ({ children }) => {
     }
   };
 
+  // update email handle here
+
+  const updateEmail = async (data) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("Please login to Fetch blog again");
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:3000/api/user/update`, {
+        method: "PUT", // or 'PUT' if that is what your backend expects
+        headers: {
+          "Content-Type": "application/json",
+          "Auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          fullName: data.fullName,
+          email: data.email,
+        }),
+      });
+      const userEmailData = await response.json();
+      console.log("userEmailData", userEmailData);
+      if (userEmailData.success === true) {
+        console.log("Email updated");
+        setTrackUpdateEmail((prev) => prev + 1);
+        const serverMSG = userEmailData.msg;
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+          navigate("/profile");
+        }, 3000);
+        setServerMsg(serverMSG + " please Wait...");
+      } else if (userEmailData.success === false) {
+        console.log("Email update failed");
+        const serverMSG = userEmailData.msg;
+        setErrorShow(true);
+        setTimeout(() => {
+          setErrorShow(false);
+        }, 3000);
+        setServerError(serverMSG);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   return (
     <CreateContext4.Provider
       value={{
         publicBlog,
         setTrackPublicBlog,
+        updateEmail,
+        show,
+        errorShow,
+        serverMsg,
+        serverError,
       }}
     >
       {children}

@@ -28,7 +28,7 @@ function Profile() {
     const GetUserEmail = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/user/getemail",
+          "http://localhost:3000/api/user/fetchemail",
           {
             method: "GET",
             headers: {
@@ -37,23 +37,23 @@ function Profile() {
             },
           }
         );
-
         if (response.status === 404) {
           console.log("email not found");
         }
-
         const data = await response.json();
-        console.log("Email fetched");
-        setEmail(data.LoginDetails.email);
-
         // console.log("This is email", data);
+        if (data.success === true) {
+          console.log("Email fetched");
+          setEmail(data.LoginDetails.email);
+        } else if (data.success === false) {
+          console.log("Email fetch failed");
+        }
       } catch (error) {
         console.error("Error fetching blog:", error);
-        // setError(error);
       }
     };
 
-    // GetUserEmail();
+    GetUserEmail();
   }, []);
 
   if (profile.length === 0) {
@@ -108,7 +108,6 @@ function Profile() {
               </Link>
               <Container style={{ marginBottom: "50px" }}>
                 <Row className="justify-content-center">
-                  {/* <Row className="justify-content-md-center"> */}
                   <div
                     style={{
                       marginTop: "20px",
@@ -119,7 +118,6 @@ function Profile() {
                   >
                     <Image
                       src={profile.url}
-                      // roundedCircle
                       style={{
                         height: "-webkit-fill-available",
                         borderRadius: "10px",

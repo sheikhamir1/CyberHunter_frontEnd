@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const CreateContext3 = createContext();
 
@@ -17,8 +16,6 @@ const CreateProvider3 = ({ children }) => {
 
   //   all tracking states
   const [trackProfile, setTrackProfile] = useState(0);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchprofile();
@@ -87,6 +84,7 @@ const CreateProvider3 = ({ children }) => {
         setServerError,
         setErrorShow,
         GetId,
+        fetchprofile,
       }}
     >
       {children}

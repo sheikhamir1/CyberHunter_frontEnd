@@ -23,7 +23,7 @@ import SinglePublicBlog from "./Blog_comp/ViewPublicSingleBlog";
 // profile components
 import Profile from "./Profile/FetchProfile_Comp";
 import CreateProfile from "./Profile/CreateProfile_Comp";
-// import EditAccount from "./BlogPage/EditAccount";
+import UpdateEmail_Comp from "./Profile/UpdateEmail_Comp/UpdateEmail_Comp";
 import UpdateProfile from "./Profile/UpdateProfile_Comp";
 
 //other components
@@ -34,10 +34,10 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <CreateProvider4>
-          <CreateProvider1>
-            <CreateProvider2>
-              <CreateProvider3>
+        <CreateProvider3>
+          <CreateProvider4>
+            <CreateProvider1>
+              <CreateProvider2>
                 <CreateProvider5>
                   <MyNavbar />
                   <Routes>
@@ -62,14 +62,17 @@ function App() {
                       element={<CreateProfile />}
                     ></Route>
                     <Route path="/profile" element={<Profile />} />
-                    {/* <Route path="/editaccount" element={<EditAccount />} /> */}
+                    <Route
+                      path="/UpdateEmail_Comp"
+                      element={<UpdateEmail_Comp />}
+                    />
                     {/* <Route path="/resetpass" element={<ResetPass />} /> */}
                   </Routes>
                 </CreateProvider5>
-              </CreateProvider3>
-            </CreateProvider2>
-          </CreateProvider1>
-        </CreateProvider4>
+              </CreateProvider2>
+            </CreateProvider1>
+          </CreateProvider4>
+        </CreateProvider3>
       </BrowserRouter>
     </>
   );
