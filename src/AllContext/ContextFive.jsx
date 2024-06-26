@@ -18,28 +18,32 @@ const CreateProvider5 = ({ children }) => {
       console.warn("Please login to Fetch blog again");
       return;
     }
-    const response = await fetch(
-      `http://localhost:3000/api/blog/${postID}/like`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          postID: postID,
-        }),
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/blog/${postID}/likepost`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            postID: postID,
+          }),
+        }
+      );
+      const data = await response.json();
+      // console.log("like data", data.data);
+      if (data.success === true) {
+        console.log("post liked");
+        setTrackAllBlog((prev) => prev + 1);
+        setTrackPublicBlog((prev) => prev + 1);
+      } else if (data.success === false) {
+        console.log("post not liked");
+        console.error("Error liking the post:", data.msg);
       }
-    );
-    const data = await response.json();
-    console.log("like data", data.data);
-    if (data.success === true) {
-      setTrackAllBlog((prev) => prev + 1);
-      setTrackPublicBlog((prev) => prev + 1);
-    } else {
-      setTrackAllBlog((prev) => prev + 1);
-      setTrackPublicBlog((prev) => prev + 1);
-      console.error("Error liking the post:", data.msg);
+    } catch (error) {
+      console.error("Error liking the post:", error);
     }
   };
 
@@ -52,28 +56,34 @@ const CreateProvider5 = ({ children }) => {
       console.warn("Please login to Fetch blog again");
       return;
     }
-    const response = await fetch(
-      `http://localhost:3000/api/blog/${postID}/dislike`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "Auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          postID: postID,
-        }),
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/blog/${postID}/dislikepost`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            postID: postID,
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log("Dislike data", data.data);
+      if (data.success === true) {
+        // console.log("post disliked");
+        setTrackAllBlog((prev) => prev + 1);
+        setTrackPublicBlog((prev) => prev + 1);
+      } else if (data.success === false) {
+        console.log("post not disliked");
+        console.error("Error liking the post:", data.msg);
+        setTrackAllBlog((prev) => prev + 1);
+        setTrackPublicBlog((prev) => prev + 1);
       }
-    );
-    const data = await response.json();
-    console.log("Dislike data", data.data);
-    if (data.success === true) {
-      setTrackAllBlog((prev) => prev + 1);
-      setTrackPublicBlog((prev) => prev + 1);
-    } else {
-      console.error("Error liking the post:", data.msg);
-      setTrackAllBlog((prev) => prev + 1);
-      setTrackPublicBlog((prev) => prev + 1);
+    } catch (error) {
+      console.error("Error dislikeing the post:", error);
     }
   };
 
