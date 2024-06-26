@@ -29,6 +29,7 @@ import UpdateProfile from "./Profile/UpdateProfile_Comp";
 //other components
 import MyNavbar from "./Navbar/Navbar";
 import MyHomePage from "./Home/HomePage";
+import Search_Comp from "./Navbar/Search_Comp";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
                       path="/UpdateEmail_Comp"
                       element={<UpdateEmail_Comp />}
                     />
+                    <Route path="/Search_Comp" element={<Search_Comp />} />
                     {/* <Route path="/resetpass" element={<ResetPass />} /> */}
                   </Routes>
                 </CreateProvider5>

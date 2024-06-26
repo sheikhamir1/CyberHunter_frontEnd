@@ -8,6 +8,8 @@ const CreateProvider4 = ({ children }) => {
   const { fetchprofile } = useContext(CreateContext3);
   //  all state here
   const [publicBlog, setPublicBlog] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [userSearch, setUserSearch] = useState("");
 
   // all alerts
   const [show, setShowAlert] = useState(false);
@@ -98,6 +100,41 @@ const CreateProvider4 = ({ children }) => {
     }
   };
 
+  // search handle here
+
+  const Search = async (data) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("Please login to Fetch blog again");
+      return;
+    }
+    setUserSearch(data);
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/blog/search?query=${data}`,
+        {
+          method: "GET", // or 'PUT' if that is what your backend expects
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      const searchData = await response.json();
+      // console.log("searchData", searchData);
+      if (searchData.success === true) {
+        console.log("Fetch Search result");
+        setSearchResult(searchData.data);
+        navigate("/Search_Comp");
+      } else if (searchData.success === false) {
+        console.log("search blog fetch failed");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   return (
     <CreateContext4.Provider
       value={{
@@ -108,6 +145,9 @@ const CreateProvider4 = ({ children }) => {
         errorShow,
         serverMsg,
         serverError,
+        Search,
+        searchResult,
+        userSearch,
       }}
     >
       {children}
