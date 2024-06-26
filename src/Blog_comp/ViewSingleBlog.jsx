@@ -1,12 +1,10 @@
 // all hooks
 import React, { useContext, useEffect, useState } from "react";
 import { CreateContext2 } from "../AllContext/ContextTwo";
-import { CreateContext5 } from "../AllContext/ContextFive";
 
 // libraries
 import { useParams, Link } from "react-router-dom";
 import { format } from "date-fns";
-import { useForm } from "react-hook-form";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -33,54 +31,11 @@ function SingleBlogPage() {
     setTrackAllBlog,
   } = useContext(CreateContext2);
 
-  const { likePost, dislikePost, CommentPost } = useContext(CreateContext5);
-
-  const [showComment, setShowComment] = useState(false);
-  const [comments, setComments] = useState([]);
-
-  // track comments
-  const [trackComments, setTrackComments] = useState(0);
-
   const { id } = useParams();
-  const [showbUTTON, setShowbUTTON] = useState(false);
-
-  const [inputValue, setInputValue] = useState("");
-  // const navigate = useNavigate();
 
   // console.log("this is allBlog:", allBlog);
   const DetailBlog = allBlog.find((blog) => blog._id === id);
   // console.log("this is DetailBlog:", DetailBlog);
-
-  // getting comments
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.warn("Please login to Fetch blog again");
-        return;
-      }
-      const response = await fetch(
-        `http://localhost:3000/api/blog/${id}/Getcomments`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Auth-token": localStorage.getItem("token"),
-          },
-        }
-      );
-      const data = await response.json();
-      // console.log("comment data", data);
-      if (data.success === true) {
-        setComments(data.data);
-      } else {
-        console.error("Error fetching comments:", data.msg);
-      }
-    };
-
-    // fetchComments();
-  }, [trackComments]);
 
   if (!DetailBlog) {
     return (
@@ -103,63 +58,6 @@ function SingleBlogPage() {
     new Date(DetailBlog.updatedAt),
     "dd/MM/yyyy" + " " + "HH:mm:ss"
   );
-
-  const handleLike = (id) => {
-    // console.log("this is id:", id);
-    likePost(id);
-    setColor((prevColor) => (prevColor === "blue" ? "red" : "blue"));
-  };
-
-  const handleDislike = (id) => {
-    // console.log("this is id:", id);
-    dislikePost(id);
-  };
-
-  const handleComment = (id) => {
-    setShowComment(!showComment);
-    setTrackComments((prev) => prev + 1);
-
-    // setGetCommentPostId(id);
-    // console.log("this is comment id:", id);
-  };
-
-  const onSubmit = (data) => {
-    // console.log(CommentData);
-    // CommentPost(DetailBlog._id, CommentData.commentBody);
-    CommentPost(DetailBlog._id, data.text);
-    reset();
-    setTrackComments((prev) => prev + 1);
-  };
-
-  // handle comment edit and delete
-
-  const handleEditComment = (commentId) => {
-    setShowbUTTON(!showbUTTON);
-    console.log(commentId);
-    const CommentToEdit = comments.find((comment) => comment._id === commentId);
-    if (CommentToEdit) {
-      setValue("text", CommentToEdit.content);
-      setInputValue(CommentToEdit);
-    }
-    console.log(CommentToEdit);
-    // console.log(text);
-    // setShowInput(!showInput);
-  };
-
-  const handleEditCommentField = (e) => {
-    console.log("this is working");
-    console.log(inputValue);
-  };
-
-  const HandleUpdateClick = (e) => {
-    e.preventDefault();
-    console.log("this is working", e);
-    setShowbUTTON(!showbUTTON);
-  };
-
-  // const handleDeleteComment = (id) => {
-  //   // console.log(id);
-  // };
 
   return (
     <>
@@ -261,7 +159,7 @@ function SingleBlogPage() {
               <strong>Update on : </strong>
               <strong>{isoUpdateAt}</strong>
             </Card.Text>
-            <Card.Title className="AllBlogCardTitle">
+            <Card.Title style={{ fontSize: "15px" }}>
               <strong>Posted by : </strong>
               <strong>{DetailBlog.author.fullName}</strong>
             </Card.Title>
