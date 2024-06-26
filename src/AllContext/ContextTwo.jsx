@@ -48,7 +48,7 @@ const CreateProvider2 = ({ children }) => {
         }
       );
       const data = await response.json();
-      // console.log("all blog ", data);
+      console.log("all blog ", data);
       if (data.success === true) {
         console.log("All blog fetched");
         setAllBlog(data.data);
