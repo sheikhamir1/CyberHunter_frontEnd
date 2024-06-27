@@ -9,10 +9,13 @@ import Alert from "react-bootstrap/Alert";
 
 // libraries
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 // Css
 import "./LoginStyle.css";
+
+// other components
+import ResendToken_Comp from "./ResendToken_Comp";
 
 function MyRegister() {
   const { setAgainFetchBlog } = useContext(CreateContext2);
@@ -202,9 +205,23 @@ function MyRegister() {
             )}
           </Form.Group>
 
-          <Button variant="primary" type="submit">
+          <Button
+            variant="primary"
+            type="submit"
+            style={{ marginRight: "10px", marginBottom: "20px" }}
+          >
             Submit
           </Button>
+          {/* <ResendToken_Comp /> */}
+          <Link
+            to={"/resend-token"}
+            style={{
+              textDecoration: "none",
+              color: "blue",
+            }}
+          >
+            Resend varification Token
+          </Link>
         </Form>
       </div>
     </>

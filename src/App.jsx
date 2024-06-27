@@ -13,6 +13,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // user components
 import MyLogin from "./User_Comp/Login_Comp";
 import MyRegister from "./User_Comp/Register_Comp";
+import ResetPassword_Comp from "./Profile/ResetPassword/ResetPassword_Comp";
+import NewPassword_Comp from "./Profile/ResetPassword/NewPassword_Comp";
+import ResendToken_Comp from "./User_Comp/ResendToken_Comp";
+import Verify_email from "./User_Comp/verify-email_Comp";
 
 // blog components
 import CreateBlog from "./Blog_comp/CreateBlog";
@@ -26,8 +30,6 @@ import Profile from "./Profile/FetchProfile_Comp";
 import CreateProfile from "./Profile/CreateProfile_Comp";
 import UpdateEmail_Comp from "./Profile/UpdateEmail_Comp/UpdateEmail_Comp";
 import UpdateProfile from "./Profile/UpdateProfile_Comp";
-import ResetPassword_Comp from "./Profile/ResetPassword/ResetPassword_Comp";
-import NewPassword_Comp from "./Profile/ResetPassword/NewPassword_Comp";
 
 //other components
 import MyNavbar from "./Navbar/Navbar";
@@ -82,6 +84,14 @@ function App() {
                       <Route
                         path="/NewPassword_Comp/:token"
                         element={<NewPassword_Comp />}
+                      />
+                      <Route
+                        path="/resend-token"
+                        element={<ResendToken_Comp />}
+                      />
+                      <Route
+                        path="/verify_email/:token"
+                        element={<Verify_email />}
                       />
                     </Routes>
                   </CreateProvider6>
