@@ -27,7 +27,7 @@ import { FaSave } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 
-function Like_Comp() {
+function PublicLike_Comp() {
   const { allBlog, setShowAlert, show, serverMsg, setServerMsg } =
     useContext(CreateContext2);
   const { likePost, dislikePost, CommentPost, handleEdit, DeleteComment } =
@@ -46,11 +46,8 @@ function Like_Comp() {
 
   const { id } = useParams();
 
-  const DetailBlog = allBlog.find((blog) => blog._id === id);
-  // const DetailBlog = publicBlog.find((blog) => blog._id === id);
+  const DetailBlog = publicBlog.find((blog) => blog._id === id);
   // console.log("this is DetailBlog:", DetailBlog);
-
-  // console.log("this is all blog in like comp", allBlog);
 
   const handleLike = (id) => {
     // console.log("this is id:", id);
@@ -352,4 +349,4 @@ function Like_Comp() {
   );
 }
 
-export default Like_Comp;
+export default PublicLike_Comp;

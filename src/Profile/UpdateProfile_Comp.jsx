@@ -13,8 +13,8 @@ import Alert from "react-bootstrap/Alert";
 
 // Css
 
-// icons
-import { MdAccountCircle } from "react-icons/md";
+// other components
+import ProfileNavbar_Comp from "./ProfileNavbar_Comp";
 
 function UpdateProfile() {
   const {
@@ -126,29 +126,7 @@ function UpdateProfile() {
           {serverError}
         </Alert>
       )}
-      <div className="setupLinks">
-        <Link
-          style={{
-            textDecoration: "none",
-            color: "rgb(227 3 3)",
-            margin: "5px",
-          }}
-          to="/profile"
-        >
-          View Profile <MdAccountCircle />
-        </Link>
-        <Link
-          style={{
-            textDecoration: "none",
-            color: "rgb(227 3 3)",
-            margin: "5px",
-          }}
-          to="/UpdateEmail_Comp"
-        >
-          Update Email <MdAccountCircle />
-        </Link>
-      </div>
-
+      <ProfileNavbar_Comp />
       <Outlet />
       <h3 style={{ marginTop: "30px", textAlign: "center" }}>
         Update Profile Information

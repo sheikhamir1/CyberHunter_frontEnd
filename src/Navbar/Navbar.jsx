@@ -93,9 +93,9 @@ function MyNavbar() {
                   <NavDropdown.Item as={Link} to="/allblog">
                     View Your Blogs
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/createprofile">
+                  {/* <NavDropdown.Item as={Link} to="/createprofile">
                     Create New Profile
-                  </NavDropdown.Item>
+                  </NavDropdown.Item> */}
                   <NavDropdown.Item as={Link} to="/profile">
                     view Profile
                   </NavDropdown.Item>

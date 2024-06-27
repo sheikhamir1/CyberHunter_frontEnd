@@ -20,9 +20,13 @@ import "./Profile.css";
 import { FiAtSign } from "react-icons/fi";
 import { FiEdit3 } from "react-icons/fi";
 
+// other components
+import ProfileNavbar_Comp from "./ProfileNavbar_Comp";
+
 function Profile() {
   const { profile, emptyProfile, GetId } = React.useContext(CreateContext3);
   const [email, setEmail] = useState([]);
+  const [noProfile, setNoProfile] = useState(false);
 
   useEffect(() => {
     const GetUserEmail = async () => {
@@ -56,18 +60,16 @@ function Profile() {
     GetUserEmail();
   }, []);
 
-  if (profile.length === 0) {
-    return (
-      <>
-        <Alert variant="info" style={{ textAlign: "center", margin: "0px" }}>
-          opps! No profile found , please create new Profile
-        </Alert>
-      </>
-    );
-  }
+  useEffect(() => {
+    if (profile.length === 0) {
+      setNoProfile("opps! No profile found , please create new Profile");
+    }
+  }, [profile]);
 
   return (
     <>
+      <ProfileNavbar_Comp />
+
       <h3
         style={{
           textAlign: "center",
@@ -76,7 +78,7 @@ function Profile() {
           color: "red",
         }}
       >
-        {emptyProfile}
+        {noProfile}
       </h3>
       {profile.map((profile) => {
         const isoCreatedAt = format(

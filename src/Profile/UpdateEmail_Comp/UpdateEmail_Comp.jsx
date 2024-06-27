@@ -11,7 +11,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 
-// icons
+// other components
+import ProfileNavbar_Comp from "../ProfileNavbar_Comp";
 
 function UpdateEmail_Comp() {
   const { setTrackProfile } = useContext(CreateContext3);
@@ -67,6 +68,7 @@ function UpdateEmail_Comp() {
 
   return (
     <>
+      <ProfileNavbar_Comp />
       {show && (
         <Alert variant="success" style={{ textAlign: "center", margin: "0px" }}>
           {serverMsg}

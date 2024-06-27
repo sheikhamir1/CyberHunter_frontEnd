@@ -14,7 +14,7 @@ import { FaArrowTurnDown } from "react-icons/fa6";
 import { IoPricetags } from "react-icons/io5";
 
 // other components
-import Like_Comp from "./Like_Comment_Share/Like_Comp";
+import PublicLike_Comp from "./Like_Comment_Share/PublicLike_Comp";
 
 function SinglePublicBlog() {
   const { publicBlog } = useContext(CreateContext4);
@@ -114,7 +114,7 @@ function SinglePublicBlog() {
           </Card.Body>
         </Card>
       </div>
-      <Like_Comp />
+      <PublicLike_Comp />
     </>
   );
 }

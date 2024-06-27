@@ -1,6 +1,7 @@
 // all hooks
 import React, { useContext } from "react";
 import { CreateContext4 } from "../AllContext/ContextFour";
+// import { CreateContext2 } from "../AllContext/ContextTwo";
 
 // libraries
 import { format } from "date-fns";
@@ -15,11 +16,16 @@ import { FaArrowTurnDown } from "react-icons/fa6";
 import { IoPricetags } from "react-icons/io5";
 
 function PublicBlogs() {
-  const { publicBlog } = useContext(CreateContext4);
+  const { publicBlog, setTrackPublicBlog } = useContext(CreateContext4);
+  // const { setTrackAllBlog } = useContext(CreateContext2);
 
   // console.log("this is public blog in publicBlogs", publicBlog);
 
   if (!publicBlog) return <h1 style={{ textAlign: "center" }}>loading</h1>;
+
+  const handleReadMore = () => {
+    setTrackPublicBlog((prev) => prev + 1);
+  };
 
   return (
     <>
@@ -56,6 +62,7 @@ function PublicBlogs() {
                       width: "67px",
                       padding: "2px 2px 2px 2px",
                     }}
+                    onClick={handleReadMore}
                   >
                     Read More
                   </Button>
