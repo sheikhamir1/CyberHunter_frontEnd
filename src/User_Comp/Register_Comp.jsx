@@ -59,7 +59,6 @@ function MyRegister() {
           setShowAlert(false);
           console.log("user registered");
           navigate("/login");
-          setAgainFetchBlog((prev) => prev + 1);
         }, 3000);
         setServerMsg(serverMSG + " please login...");
       } else if (postResponse.success === false) {
