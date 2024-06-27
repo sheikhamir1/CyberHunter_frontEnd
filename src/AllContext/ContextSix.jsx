@@ -1,8 +1,16 @@
-import { createContext, useState } from "react";
+// all hooks
+import { createContext, useState, useContext } from "react";
+import { CreateContext1 } from "./ContextOne";
+
+// libraries
+import { useNavigate } from "react-router-dom";
+
+// create context
 
 const CreateContext6 = createContext();
 
 const CreateProvider6 = ({ children }) => {
+  const { setIsLoggedIn } = useContext(CreateContext1);
   // all states here
 
   // all alerts
@@ -11,12 +19,14 @@ const CreateProvider6 = ({ children }) => {
   const [serverMsg, setServerMsg] = useState("");
   const [serverError, setServerError] = useState("");
 
+  const navigate = useNavigate();
+
   // handle reset password
 
   const ResetPassword = async (email) => {
     const token = localStorage.getItem("token");
     if (!token) {
-      console.warn("Please login to get all blog");
+      console.warn("Please login to reset password");
       return;
     }
     try {
@@ -56,9 +66,63 @@ const CreateProvider6 = ({ children }) => {
     }
   };
 
+  // handle update password
+  const UpdatePassword = async (password, confirmPassword, tokenid) => {
+    // console.log("this is token id", tokenid);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("Please login to get update password");
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/user/reset-password/${tokenid}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify({ password, confirmPassword }),
+        }
+      );
+      const data = await response.json();
+      // console.log("update password", data);
+      if (data.success === true) {
+        console.log("password updated");
+        const serverMSG = data.msg;
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+          localStorage.removeItem("token");
+          setIsLoggedIn(false);
+          navigate("/login");
+        }, 3000);
+        setServerMsg(serverMSG);
+      } else if (data.success === false) {
+        console.log("failed to update password");
+        const serverMSG = data.msg;
+        setErrorShow(true);
+        setTimeout(() => {
+          setErrorShow(false);
+        }, 3000);
+        setServerError(serverMSG);
+      }
+    } catch (error) {
+      console.log("there is error in update password", error);
+    }
+  };
+
   return (
     <CreateContext6.Provider
-      value={{ ResetPassword, show, errorShow, serverMsg, serverError }}
+      value={{
+        ResetPassword,
+        show,
+        errorShow,
+        serverMsg,
+        serverError,
+        UpdatePassword,
+      }}
     >
       {children}
     </CreateContext6.Provider>

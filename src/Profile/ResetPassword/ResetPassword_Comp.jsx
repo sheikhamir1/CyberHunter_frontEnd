@@ -8,7 +8,6 @@ import Button from "react-bootstrap/Button";
 
 // other components
 import ProfileNavbar_Comp from "../ProfileNavbar_Comp";
-import NewPassword_Comp from "./NewPassword_Comp";
 
 function ResetPassword_Comp() {
   const { ResetPassword, show, errorShow, serverMsg, serverError } =

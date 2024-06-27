@@ -80,7 +80,7 @@ function App() {
                         element={<ResetPassword_Comp />}
                       />
                       <Route
-                        path="/NewPassword_Comp"
+                        path="/NewPassword_Comp/:token"
                         element={<NewPassword_Comp />}
                       />
                     </Routes>

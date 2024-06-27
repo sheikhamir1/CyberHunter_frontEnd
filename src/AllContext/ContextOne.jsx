@@ -6,6 +6,7 @@ const CreateContext1 = createContext();
 const CreateProvider1 = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [show, setShow] = useState(false);
+  const [trackLogout, setTrackLogout] = useState(0);
 
   // Logout Functionality and login functionality with toggle
 
@@ -33,6 +34,8 @@ const CreateProvider1 = ({ children }) => {
         Login,
         show,
         setShow,
+        setTrackLogout,
+        setIsLoggedIn,
       }}
     >
       {children}
