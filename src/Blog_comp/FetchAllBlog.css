@@ -56,3 +56,31 @@ img {
 .AllBlogCardSetup.card {
   height: 350px;
 }
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+}
+
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination li.active {
+  font-weight: bold;
+}
+
+.pagination li a {
+  text-decoration: none;
+  color: #333;
+}
+ul.pagination {
+  background-color: bisque;
+  margin: 0px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

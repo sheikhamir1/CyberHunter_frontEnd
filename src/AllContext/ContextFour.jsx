@@ -8,6 +8,15 @@ const CreateProvider4 = ({ children }) => {
   const { fetchprofile } = useContext(CreateContext3);
   //  all state here
   const [publicBlog, setPublicBlog] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalBlogCount, setTotalBlogCount] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+
+  useEffect(() => {
+    PublicBlog(currentPage);
+  }, [currentPage]);
+  const limit = 10;
+
   const [searchResult, setSearchResult] = useState([]);
   const [userSearch, setUserSearch] = useState("");
 
@@ -37,18 +46,24 @@ const CreateProvider4 = ({ children }) => {
 
   //  handle public blog
   // from here
-  const PublicBlog = async () => {
-    const response = await fetch("http://localhost:3000/api/blog/publicblog", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const PublicBlog = async (page) => {
+    const response = await fetch(
+      `http://localhost:3000/api/blog/publicblog?page=${page}&limit=${limit}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
     // console.log("all Public blog fetched in contextfour", data);
     if (data.success === true) {
       console.log("public blog fetched");
       setPublicBlog(data.data);
+      setCurrentPage(data.page);
+      setPageCount(data.pages);
+      setTotalBlogCount(data.total);
     } else if (data.success === false) {
       console.log("public blog fetch failed");
     }
@@ -148,6 +163,8 @@ const CreateProvider4 = ({ children }) => {
         Search,
         searchResult,
         userSearch,
+        setCurrentPage,
+        pageCount,
       }}
     >
       {children}

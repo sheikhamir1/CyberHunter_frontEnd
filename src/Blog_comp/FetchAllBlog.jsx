@@ -7,6 +7,7 @@ import { CreateContext4 } from "../AllContext/ContextFour";
 import { useForm } from "react-hook-form";
 import { Link, Outlet } from "react-router-dom";
 import { format } from "date-fns";
+import ReactPaginate from "react-paginate";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -29,6 +30,9 @@ import PrivateBlogs from "./FetchPrivateBlog";
 function AllBlog() {
   const {
     allBlog,
+    pageCount,
+    setCurrentPage,
+    // totalBlogCount,
     GetBlogId,
     DeleteBlog,
     show,
@@ -79,6 +83,10 @@ function AllBlog() {
   const HandleUpdate = (id, body) => {
     setTrackAllBlog((prev) => prev + 1);
     GetBlogId(id, body);
+  };
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected + 1); // event.selected starts from 0, so add 1
   };
 
   return (
@@ -294,6 +302,18 @@ function AllBlog() {
               );
             })}
           </div>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            activeClassName={"active"}
+          />
         </>
       )}
     </>

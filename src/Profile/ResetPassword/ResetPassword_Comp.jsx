@@ -48,7 +48,7 @@ function ResetPassword_Comp() {
           <div className="card-body px-5">
             <p className="card-text py-2">
               Enter your Current email address and we'll send you an email with
-              like to reset your password(check spam also)
+              link to reset your password(check spam also)
             </p>
             <div data-mdb-input-init className="form-outline">
               <input

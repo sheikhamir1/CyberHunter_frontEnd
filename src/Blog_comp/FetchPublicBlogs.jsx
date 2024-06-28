@@ -6,6 +6,7 @@ import { CreateContext4 } from "../AllContext/ContextFour";
 // libraries
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -15,8 +16,12 @@ import Button from "react-bootstrap/Button";
 import { FaArrowTurnDown } from "react-icons/fa6";
 import { IoPricetags } from "react-icons/io5";
 
+// css
+import "./FetchAllBlog.css";
+
 function PublicBlogs() {
-  const { publicBlog, setTrackPublicBlog } = useContext(CreateContext4);
+  const { publicBlog, setTrackPublicBlog, setCurrentPage, pageCount } =
+    useContext(CreateContext4);
   // const { setTrackAllBlog } = useContext(CreateContext2);
 
   // console.log("this is public blog in publicBlogs", publicBlog);
@@ -25,6 +30,10 @@ function PublicBlogs() {
 
   const handleReadMore = () => {
     setTrackPublicBlog((prev) => prev + 1);
+  };
+
+  const handlePageClick = (event) => {
+    setCurrentPage(event.selected + 1); // event.selected starts from 0, so add 1
   };
 
   return (
@@ -144,6 +153,18 @@ function PublicBlogs() {
           );
         })}
       </div>
+      <ReactPaginate
+        previousLabel={"previous"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        activeClassName={"active"}
+      />
     </>
   );
 }

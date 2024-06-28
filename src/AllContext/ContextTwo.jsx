@@ -10,12 +10,26 @@ const CreateProvider2 = ({ children }) => {
 
   // all states here
   const [allBlog, setAllBlog] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalBlogCount, setTotalBlogCount] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+
+  useEffect(() => {
+    GetAllBlog(currentPage);
+  }, [currentPage]);
+  const limit = 10;
+
   const [UpdateBlogId, setUpdateBlogId] = useState("");
   const [updateBlogBody, setUpdateBlogBody] = useState({});
   const [allPrivateBlog, setAllPrivateBlog] = useState([]);
 
   // tracking the states
   const [trackAllBlog, setTrackAllBlog] = useState(0);
+  // debuging states
+  // console.log("allBlog", allBlog);
+  // console.log("currentPage", currentPage);
+  // console.log("totalPages", totalPages);
+  // console.log("totalBlogCount", totalBlogCount);
 
   // *************************************************************************************************************************************************************************************************************************************************************************
   // all alerts
@@ -30,7 +44,7 @@ const CreateProvider2 = ({ children }) => {
   // *************************************************************************************************************************************************************************************************************************************************************************
   // Handle Get all blog
   // from here
-  const GetAllBlog = async () => {
+  const GetAllBlog = async (page) => {
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to get all blog");
@@ -38,7 +52,7 @@ const CreateProvider2 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/fetchblogs`,
+        `http://localhost:3000/api/blog/fetchblogs?page=${page}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -52,6 +66,9 @@ const CreateProvider2 = ({ children }) => {
       if (data.success === true) {
         console.log("All blog fetched");
         setAllBlog(data.data);
+        setCurrentPage(data.page);
+        setPageCount(data.pages);
+        setTotalBlogCount(data.total);
       } else if (data.success === false) {
         console.log("All blog fetch failed");
       }
@@ -286,6 +303,10 @@ const CreateProvider2 = ({ children }) => {
         setShowAlert,
         setErrorShow,
         setServerError,
+        currentPage,
+        totalBlogCount,
+        setCurrentPage,
+        pageCount,
       }}
     >
       {children}
