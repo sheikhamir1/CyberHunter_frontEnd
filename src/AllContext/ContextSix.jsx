@@ -1,5 +1,5 @@
 // all hooks
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { CreateContext1 } from "./ContextOne";
 
 // libraries
@@ -13,6 +13,7 @@ const CreateProvider6 = ({ children }) => {
   const { setIsLoggedIn } = useContext(CreateContext1);
   // all states here
   const [loading, setLoading] = useState(false);
+  const [AllblogCategory, setAllBlogCategory] = useState([]);
 
   // all alerts
   const [show, setShowAlert] = useState(false);
@@ -124,6 +125,60 @@ const CreateProvider6 = ({ children }) => {
     }
   };
 
+  // *****************************************************************************************************************
+  // fetch all blogs by categorys
+
+  useEffect(() => {
+    // BlogsCategory();
+  }, []);
+
+  const BlogsCategory = async (category) => {
+    setLoading(true); // Show loading spinner
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.warn("Please login to get all blogs");
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/blog/blogsbycategory/${category}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      const data = await response.json();
+      // console.log("blogs by category", data);
+      if (data.success === true) {
+        setLoading(false); // Hide loading spinner
+        setAllBlogCategory(data.data);
+        console.log("blogs category fetched");
+        const serverMSG = data.msg;
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 3000);
+        setServerMsg(serverMSG);
+      } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
+        console.log("failed to fetch all blogs");
+        const serverMSG = data.msg;
+        setErrorShow(true);
+        setTimeout(() => {
+          setErrorShow(false);
+        }, 3000);
+        setServerError(serverMSG);
+      }
+    } catch (error) {
+      setLoading(false); // Hide loading spinner
+      console.log("there is error in fetch all blogs by category", error);
+    }
+  };
+
   return (
     <CreateContext6.Provider
       value={{
@@ -134,6 +189,8 @@ const CreateProvider6 = ({ children }) => {
         serverError,
         UpdatePassword,
         loading,
+        BlogsCategory,
+        AllblogCategory,
       }}
     >
       {children}

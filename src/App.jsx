@@ -24,7 +24,7 @@ import AllBlog from "./Blog_comp/FetchAllBlog";
 import UpdateBlog from "./Blog_comp/UpdateBlog";
 import SingleBlogPage from "./Blog_comp/ViewSingleBlog";
 import SinglePublicBlog from "./Blog_comp/ViewPublicSingleBlog";
-
+import BlogsCategory from "./Blog_comp/ShowAllBlogsCategory_Comp";
 // profile components
 import Profile from "./Profile/FetchProfile_Comp";
 import CreateProfile from "./Profile/CreateProfile_Comp";
@@ -92,6 +92,10 @@ function App() {
                       <Route
                         path="/verify_email/:token"
                         element={<Verify_email />}
+                      />
+                      <Route
+                        path="blogsCategory/:category"
+                        element={<BlogsCategory />}
                       />
                     </Routes>
                   </CreateProvider6>

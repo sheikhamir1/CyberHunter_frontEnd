@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState, useContext } from "react";
-import { get } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { CreateContext4 } from "./ContextFour";
 
@@ -88,8 +87,6 @@ const CreateProvider2 = ({ children }) => {
   // from here
 
   const getPrivateBlog = async () => {
-    setLoading(true); // Show loading spinner
-
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to get all blog");
@@ -109,15 +106,13 @@ const CreateProvider2 = ({ children }) => {
       const data = await response.json();
       // console.log("all private blog fetched", data);
       if (data.success === true) {
-        setLoading(false); // Hide loading spinner
+        // setLoading(false); // Hide loading spinne
         console.log("private blog fetched");
         setAllPrivateBlog(data.privetBlog);
       } else if (data.success === false) {
-        setLoading(false); // Hide loading spinner
         console.log("private blog fetch failed");
       }
     } catch (error) {
-      setLoading(false); // Hide loading spinner
       console.log("there is no blog found", error);
     }
   };

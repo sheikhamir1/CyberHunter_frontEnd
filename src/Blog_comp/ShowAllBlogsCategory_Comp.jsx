@@ -1,76 +1,61 @@
 // all hooks
 import React, { useContext } from "react";
-import { CreateContext2 } from "../AllContext/ContextTwo";
 import { CreateContext4 } from "../AllContext/ContextFour";
+import { CreateContext6 } from "../AllContext/ContextSix";
 
 // libraries
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
-
-// Css
-import "./FetchAllBlog.css";
 
 // icons
 import { FaArrowTurnDown } from "react-icons/fa6";
 import { IoPricetags } from "react-icons/io5";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteSweep } from "react-icons/md";
 
-function PrivateBlogs() {
-  const {
-    GetBlogId,
-    DeleteBlog,
-    show,
-    errorShow,
-    serverMsg,
-    serverError,
-    setTrackAllBlog,
-    allPrivateBlog,
-  } = useContext(CreateContext2);
+// css
+import "./FetchAllBlog.css";
 
-  const { setTrackPublicBlog } = useContext(CreateContext4);
+function BlogsCategory() {
+  const { setTrackPublicBlog, loading } = useContext(CreateContext4);
 
-  const handleDelete = (id) => {
-    DeleteBlog(id);
-    // setTrackPublicBlog((prev) => prev + 1);
-  };
+  const { AllblogCategory } = useContext(CreateContext6);
+  //   console.log("AllblogCategory", AllblogCategory);
+  if (AllblogCategory.length === 0)
+    return <h1 style={{ textAlign: "center" }}>no blog found</h1>;
 
-  if (allPrivateBlog.length === 0) {
-    return (
-      <>
-        <Alert variant="info" style={{ textAlign: "center", margin: "0px" }}>
-          opps! No blog found , please create new blog
-        </Alert>
-      </>
-    );
-  }
-
-  const handleClick = () => {
-    setTrackAllBlog((prev) => prev + 1);
+  const handleReadMore = () => {
     setTrackPublicBlog((prev) => prev + 1);
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
-      {show && (
-        <Alert variant="success" style={{ textAlign: "center", margin: "0px" }}>
-          {serverMsg}
-        </Alert>
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
-      {errorShow && (
-        <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
-          {serverError}
-        </Alert>
-      )}
-      {/* <Outlet /> */}
-
       <div className="AllBlogMainSetup">
-        {allPrivateBlog.map((blog) => {
+        {AllblogCategory.map((blog) => {
           const isoCreatedAt = format(
             new Date(blog.createdAt),
             "dd/MM/yyyy" + " " + "HH:mm:ss"
@@ -91,12 +76,8 @@ function PrivateBlogs() {
               <div className="SetUpdateAndDelete">
                 <Link
                   as={Link}
-                  to={`/singleblogpage/${blog._id}`}
-                  style={{
-                    margin: "5px",
-                    position: "absolute",
-                    left: "5px",
-                  }}
+                  to={`/singlePublicBlog/${blog._id}`}
+                  style={{ margin: "5px", position: "static", left: "5px" }}
                 >
                   <Button
                     variant="primary"
@@ -106,39 +87,10 @@ function PrivateBlogs() {
                       width: "67px",
                       padding: "2px 2px 2px 2px",
                     }}
-                    onClick={handleClick}
+                    onClick={handleReadMore}
                   >
                     Read More
                   </Button>
-                </Link>
-                <Link as={Link} to={`/updateblog/`}>
-                  <FaEdit
-                    title="Click to Update this blog"
-                    onClick={() => GetBlogId(blog._id, blog)}
-                    className="editIcon"
-                    style={{
-                      fontSize: "20px",
-                      cursor: "pointer",
-                      margin: "5px",
-                      color: "#3b28a1",
-                      marginTop: "5px",
-                      marginRight: "5px",
-                    }}
-                  />
-                </Link>
-                <Link>
-                  <MdDeleteSweep
-                    title="Click to Delete this blog"
-                    onClick={() => handleDelete(blog._id)}
-                    style={{
-                      fontSize: "22px",
-                      cursor: "pointer",
-                      margin: "5px",
-                      color: "#3b28a1",
-                      marginTop: "5px",
-                      marginRight: "5px",
-                    }}
-                  />
                 </Link>
               </div>
               <Card.Body style={{ fontSize: "12px" }}>
@@ -154,6 +106,7 @@ function PrivateBlogs() {
                   dangerouslySetInnerHTML={{ __html: blog.content }}
                   // className="AllBlogImageSetup"
                   style={{ height: "-webkit-fill-available", width: "260px" }}
+                  // style={{ height: "auto", width: "-webkit-fill-available" }}
                 />
                 <Card.Text
                   style={{
@@ -175,10 +128,7 @@ function PrivateBlogs() {
                       <div
                         key={index}
                         className="tag"
-                        style={{
-                          display: "inline-block",
-                          marginRight: "5px",
-                        }}
+                        style={{ display: "inline-block", marginRight: "5px" }}
                       >
                         <strong style={{ color: "brown", marginRight: "5px" }}>
                           {tag}
@@ -223,4 +173,4 @@ function PrivateBlogs() {
   );
 }
 
-export default PrivateBlogs;
+export default BlogsCategory;
