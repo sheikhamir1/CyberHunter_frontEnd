@@ -37,59 +37,63 @@ function FetchBlogsCategory_Route() {
 
   return (
     <>
-      <h3
-        style={{
-          textAlign: "center",
-          fontWeight: "bold",
-          backgroundColor: "#f3d7b475",
-          padding: "10px",
-          margin: "0px",
-        }}
-      >
-        Search By Category
-      </h3>
-      <Form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{
-          backgroundColor: "#f3d7b475",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Form.Group
-          style={{ padding: "10px", textAlign: "center", width: "80%" }}
-          controlId="formBasicCategory"
-        >
-          <Form.Select
-            required
-            aria-label="Default select example"
-            name="categories"
-            {...register("categories", {
-              required: "categories is required",
-            })}
+      {localStorage.getItem("token") ? (
+        <>
+          <h3
+            style={{
+              textAlign: "center",
+              fontWeight: "bold",
+              backgroundColor: "#f3d7b475",
+              padding: "10px",
+              margin: "0px",
+            }}
           >
-            <option value="">select a category</option>
-            <option value="Development">Development</option>
-            <option value="Cyber Security">Cyber Security</option>
-            <option value="Presonal">Presonal</option>
-            <option value="Others">Others</option>
-          </Form.Select>
-          {errors.categories && (
-            <span style={{ color: "red", fontWeight: "bold" }}>
-              {errors.categories.message}
-            </span>
-          )}
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          className="setupBtnOnCreateBlog"
-          style={{ margin: "8px", height: "32px", padding: "0px 5px" }}
-        >
-          Search
-        </Button>
-      </Form>
+            Search By Category
+          </h3>
+          <Form
+            onSubmit={handleSubmit(onSubmit)}
+            style={{
+              backgroundColor: "#f3d7b475",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Form.Group
+              style={{ padding: "10px", textAlign: "center", width: "80%" }}
+              controlId="formBasicCategory"
+            >
+              <Form.Select
+                required
+                aria-label="Default select example"
+                name="categories"
+                {...register("categories", {
+                  required: "categories is required",
+                })}
+              >
+                <option value="">select a category</option>
+                <option value="Development">Development</option>
+                <option value="Cyber Security">Cyber Security</option>
+                <option value="Presonal">Presonal</option>
+                <option value="Others">Others</option>
+              </Form.Select>
+              {errors.categories && (
+                <span style={{ color: "red", fontWeight: "bold" }}>
+                  {errors.categories.message}
+                </span>
+              )}
+            </Form.Group>
+            <Button
+              variant="primary"
+              type="submit"
+              className="setupBtnOnCreateBlog"
+              style={{ margin: "8px", height: "32px", padding: "0px 5px" }}
+            >
+              Search
+            </Button>
+          </Form>
+        </>
+      ) : null}
     </>
   );
 }
