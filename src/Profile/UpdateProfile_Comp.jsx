@@ -1,10 +1,12 @@
 // all hooks
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { useForm } from "react-hook-form";
 import { useNavigate, Link, Outlet } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -34,6 +36,8 @@ function UpdateProfile() {
   //   console.log("this is getProfileBody", getProfileBody);
   //   console.log("this is getProfileId", getProfileId);
 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const {
@@ -54,6 +58,8 @@ function UpdateProfile() {
   }, [getProfileBody, setValue]);
 
   const onSubmit = async (data) => {
+    setLoading(true); // Show loading spinner
+
     const formData = new FormData();
     formData.append("username", data.username);
     formData.append("bio", data.bio);
@@ -88,6 +94,7 @@ function UpdateProfile() {
         // console.log("this is update profile result", response2);
 
         if (response2.success === true) {
+          setLoading(false); // Hide loading spinner
           console.log("User Profile updated ");
           setTrackProfile((prev) => prev + 1);
           const serverMSG = response2.msg;
@@ -99,6 +106,7 @@ function UpdateProfile() {
           }, 3000);
           setServerMsg(serverMSG + " please Wait...");
         } else if (response2.success === false) {
+          setLoading(false); // Hide loading spinner
           console.log("User Profile updated failed ");
           const serverMSG = response2.msg;
           window.scrollTo(0, 0);
@@ -109,11 +117,17 @@ function UpdateProfile() {
           setServerError(serverMSG);
         }
       } catch (error) {
+        setLoading(false); // Hide loading spinner
         console.error("Error Updating profile:", error);
       }
     };
     ProfileUpdateApi();
   };
+
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
 
   return (
     <>
@@ -126,6 +140,22 @@ function UpdateProfile() {
         <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
           {serverError}
         </Alert>
+      )}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
       <ProfileNavbar_Comp />
       <Outlet />

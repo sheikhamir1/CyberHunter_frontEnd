@@ -6,11 +6,15 @@ import { CreateContext6 } from "../../AllContext/ContextSix";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
+// libraries
+import LoadingSpinner from "../../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
+
 // other components
 import ProfileNavbar_Comp from "../ProfileNavbar_Comp";
 
 function ResetPassword_Comp() {
-  const { ResetPassword, show, errorShow, serverMsg, serverError } =
+  const { ResetPassword, show, errorShow, serverMsg, serverError, loading } =
     useContext(CreateContext6);
   const [inputValue, setInputValue] = useState("");
 
@@ -20,6 +24,10 @@ function ResetPassword_Comp() {
     setInputValue("");
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       <ProfileNavbar_Comp />
@@ -33,6 +41,24 @@ function ResetPassword_Comp() {
           {serverError}
         </Alert>
       )}
+
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            // marginTop: "50px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
+      )}
+
       <div
         className="set"
         style={{

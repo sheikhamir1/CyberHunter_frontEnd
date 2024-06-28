@@ -7,6 +7,8 @@ import { CreateContext3 } from "../AllContext/ContextThree";
 // libraries
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -24,6 +26,8 @@ function UserLogin() {
   const [errorShow, setErrorShow] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
   const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const {
@@ -34,6 +38,8 @@ function UserLogin() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true); // Show loading spinner
+
     try {
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -51,6 +57,7 @@ function UserLogin() {
       const postResponse = await response.json();
       // console.log(postResponse);
       if (postResponse.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("user logged in");
         setTrackAllBlog((prev) => prev + 1);
         setTrackProfile((prev) => prev + 1);
@@ -66,7 +73,8 @@ function UserLogin() {
         }, 3000);
         setServerMsg(serverMSG);
       } else if (postResponse.success === false) {
-        const serverMSG = postResponse.msg;
+        setLoading(false); // Hide loading spinner
+        const serverMSG = postResponse.message;
         console.log("user login failed");
         setErrorShow(true);
         setTimeout(() => {
@@ -76,9 +84,15 @@ function UserLogin() {
       }
       reset();
     } catch (errors) {
+      setLoading(false); // Hide loading spinner
       console.log(errors);
     }
   };
+
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
 
   return (
     <>
@@ -91,6 +105,22 @@ function UserLogin() {
         <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
           {serverError}
         </Alert>
+      )}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
       <div className="LoginFormSetup">
         <Form className="Setup" onSubmit={handleSubmit(onSubmit)}>

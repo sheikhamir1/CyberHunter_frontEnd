@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useParams } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Form from "react-bootstrap/Form";
@@ -22,7 +24,7 @@ import { MdNoteAdd } from "react-icons/md";
 
 function UpdateBlog() {
   const {
-    UpdateBlogId,
+    loading,
     updateBlogBody,
     show,
     errorShow,
@@ -93,6 +95,10 @@ function UpdateBlog() {
     setAddtags([]);
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       {show && (
@@ -104,6 +110,22 @@ function UpdateBlog() {
         <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
           {serverError}
         </Alert>
+      )}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
       <div className="mainSetup">
         <Form

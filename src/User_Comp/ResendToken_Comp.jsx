@@ -3,6 +3,8 @@ import React, { useContext, useState } from "react";
 
 // libraries
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Alert from "react-bootstrap/Alert";
@@ -10,6 +12,7 @@ import Button from "react-bootstrap/Button";
 
 function ResendToken_Comp() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // all alerts
   const [show, setShowAlert] = useState(false);
@@ -20,6 +23,8 @@ function ResendToken_Comp() {
   const navigate = useNavigate();
 
   const HandleClick = async () => {
+    setLoading(true); // Show loading spinner
+
     try {
       const response = await fetch(
         "http://localhost:3000/api/user/resend-verification-email",
@@ -35,6 +40,7 @@ function ResendToken_Comp() {
       const data = await response.json();
       //   console.log("resend token result", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("token sent to email");
         const serverMSG = data.msg;
         setShowAlert(true);
@@ -44,6 +50,7 @@ function ResendToken_Comp() {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("resend token failed");
         const serverMSG = data.msg;
         setErrorShow(true);
@@ -53,11 +60,16 @@ function ResendToken_Comp() {
         setServerError(serverMSG);
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.log(error);
     }
     setEmail("");
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       {show && (
@@ -69,6 +81,22 @@ function ResendToken_Comp() {
         <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
           {serverError}
         </Alert>
+      )}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
       <div
         className="set"

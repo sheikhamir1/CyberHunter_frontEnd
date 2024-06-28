@@ -10,6 +10,8 @@ import Alert from "react-bootstrap/Alert";
 // libraries
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // Css
 import "./LoginStyle.css";
@@ -23,6 +25,8 @@ function MyRegister() {
   const [errorShow, setErrorShow] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
   const [serverError, setServerError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   // useing react hook form here
   const {
@@ -33,6 +37,8 @@ function MyRegister() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true); // Show loading spinner
+
     try {
       const response = await fetch("http://localhost:3000/api/auth/register", {
         method: "POST",
@@ -50,8 +56,10 @@ function MyRegister() {
       });
 
       const postResponse = await response.json();
-      // console.log(postResponse);
+      console.log(postResponse);
       if (postResponse.success === true) {
+        setLoading(false); // Hide loading spinner
+
         console.log("user registered");
         const JWT_token = postResponse.authToken;
         // console.log("this is auth token", JWT_token);
@@ -63,22 +71,28 @@ function MyRegister() {
           console.log("user registered");
           navigate("/login");
         }, 3000);
-        setServerMsg(serverMSG + " please login...");
+        setServerMsg(serverMSG + " please verify your email...");
       } else if (postResponse.success === false) {
+        setLoading(false); // Hide loading spinner
+        const serverMSG = postResponse.message;
         console.log("user registertion failed");
         setErrorShow(true);
         setTimeout(() => {
           setErrorShow(false);
         }, 3000);
-        setServerError(postResponse.message);
+        setServerError(serverMSG || " password does not match...");
       }
       reset();
     } catch (errors) {
-      const error2 = postResponse.error[0].msg;
-      console.log(error2);
+      setLoading(false); // Hide loading spinner
+      console.log(errors);
     }
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       {show && (
@@ -90,6 +104,23 @@ function MyRegister() {
         <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
           {serverError}
         </Alert>
+      )}
+
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={70}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
       <div className="LoginFormSetup">
         <Form className="Setup" onSubmit={handleSubmit(onSubmit)}>

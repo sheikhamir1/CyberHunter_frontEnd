@@ -6,6 +6,8 @@ import { CreateContext4 } from "../AllContext/ContextFour";
 // libraries
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -31,6 +33,7 @@ function PrivateBlogs() {
     serverError,
     setTrackAllBlog,
     allPrivateBlog,
+    loading,
   } = useContext(CreateContext2);
 
   const { setTrackPublicBlog } = useContext(CreateContext4);
@@ -55,6 +58,10 @@ function PrivateBlogs() {
     setTrackPublicBlog((prev) => prev + 1);
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       {show && (
@@ -68,6 +75,22 @@ function PrivateBlogs() {
         </Alert>
       )}
       {/* <Outlet /> */}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
+      )}
 
       <div className="AllBlogMainSetup">
         {allPrivateBlog.map((blog) => {

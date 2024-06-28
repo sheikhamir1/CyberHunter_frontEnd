@@ -7,6 +7,8 @@ import { CreateContext4 } from "../AllContext/ContextFour";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -20,9 +22,8 @@ import { IoPricetags } from "react-icons/io5";
 import "./FetchAllBlog.css";
 
 function PublicBlogs() {
-  const { publicBlog, setTrackPublicBlog, setCurrentPage, pageCount } =
+  const { publicBlog, setTrackPublicBlog, setCurrentPage, pageCount, loading } =
     useContext(CreateContext4);
-  // const { setTrackAllBlog } = useContext(CreateContext2);
 
   // console.log("this is public blog in publicBlogs", publicBlog);
 
@@ -36,8 +37,28 @@ function PublicBlogs() {
     setCurrentPage(event.selected + 1); // event.selected starts from 0, so add 1
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
+      )}
       <div className="AllBlogMainSetup">
         {publicBlog.map((blog) => {
           const isoCreatedAt = format(

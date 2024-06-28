@@ -11,6 +11,7 @@ const CreateProvider4 = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalBlogCount, setTotalBlogCount] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     PublicBlog(currentPage);
@@ -47,6 +48,7 @@ const CreateProvider4 = ({ children }) => {
   //  handle public blog
   // from here
   const PublicBlog = async (page) => {
+    setLoading(true); // Show loading spinner
     const response = await fetch(
       `http://localhost:3000/api/blog/publicblog?page=${page}&limit=${limit}`,
       {
@@ -59,12 +61,14 @@ const CreateProvider4 = ({ children }) => {
     const data = await response.json();
     // console.log("all Public blog fetched in contextfour", data);
     if (data.success === true) {
+      setLoading(false); // Hide loading spinner
       console.log("public blog fetched");
       setPublicBlog(data.data);
       setCurrentPage(data.page);
       setPageCount(data.pages);
       setTotalBlogCount(data.total);
     } else if (data.success === false) {
+      setLoading(false); // Hide loading spinner
       console.log("public blog fetch failed");
     }
   };
@@ -118,6 +122,8 @@ const CreateProvider4 = ({ children }) => {
   // search handle here
 
   const Search = async (data) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to Fetch blog again");
@@ -139,13 +145,16 @@ const CreateProvider4 = ({ children }) => {
       const searchData = await response.json();
       // console.log("searchData", searchData);
       if (searchData.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("Fetch Search result");
         setSearchResult(searchData.data);
         navigate("/Search_Comp");
       } else if (searchData.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("search blog fetch failed");
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.error("Error updating profile:", error);
     }
   };
@@ -165,6 +174,7 @@ const CreateProvider4 = ({ children }) => {
         userSearch,
         setCurrentPage,
         pageCount,
+        loading,
       }}
     >
       {children}

@@ -5,6 +5,8 @@ import { CreateContext6 } from "../../AllContext/ContextSix";
 // libraries
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import LoadingSpinner from "../../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -15,7 +17,7 @@ import Alert from "react-bootstrap/Alert";
 import "./NewPassword_Comp.css";
 
 function NewPassword_Comp() {
-  const { show, errorShow, serverMsg, serverError, UpdatePassword } =
+  const { show, errorShow, serverMsg, serverError, UpdatePassword, loading } =
     useContext(CreateContext6);
 
   const { token } = useParams();
@@ -35,6 +37,10 @@ function NewPassword_Comp() {
     reset();
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       {show && (
@@ -46,6 +52,22 @@ function NewPassword_Comp() {
         <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
           {serverError}
         </Alert>
+      )}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
       <h1
         style={{

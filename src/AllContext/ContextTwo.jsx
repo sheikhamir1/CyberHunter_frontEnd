@@ -13,6 +13,7 @@ const CreateProvider2 = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalBlogCount, setTotalBlogCount] = useState(0);
   const [pageCount, setPageCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     GetAllBlog(currentPage);
@@ -45,6 +46,8 @@ const CreateProvider2 = ({ children }) => {
   // Handle Get all blog
   // from here
   const GetAllBlog = async (page) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to get all blog");
@@ -64,15 +67,18 @@ const CreateProvider2 = ({ children }) => {
       const data = await response.json();
       // console.log("all blog ", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("All blog fetched");
         setAllBlog(data.data);
         setCurrentPage(data.page);
         setPageCount(data.pages);
         setTotalBlogCount(data.total);
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("All blog fetch failed");
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.log("there is no blog found", error);
     }
   };
@@ -82,6 +88,8 @@ const CreateProvider2 = ({ children }) => {
   // from here
 
   const getPrivateBlog = async () => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to get all blog");
@@ -101,12 +109,15 @@ const CreateProvider2 = ({ children }) => {
       const data = await response.json();
       // console.log("all private blog fetched", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("private blog fetched");
         setAllPrivateBlog(data.privetBlog);
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("private blog fetch failed");
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.log("there is no blog found", error);
     }
   };
@@ -120,6 +131,8 @@ const CreateProvider2 = ({ children }) => {
   // from here
 
   const CreateBlog = async (blogBody) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to create a blog");
@@ -140,6 +153,7 @@ const CreateProvider2 = ({ children }) => {
       const data = await response.json();
       // console.log("this is create blog", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("blog created");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
@@ -152,6 +166,7 @@ const CreateProvider2 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("blog creation failed");
         setErrorShow(true);
         setTimeout(() => {
@@ -160,6 +175,7 @@ const CreateProvider2 = ({ children }) => {
         setServerError("something went wrong please try again");
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.log(error);
     }
   };
@@ -174,6 +190,8 @@ const CreateProvider2 = ({ children }) => {
   };
 
   const handleUpdateBlog = async (blogBody) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to update a blog");
@@ -194,6 +212,7 @@ const CreateProvider2 = ({ children }) => {
       const data = await response.json();
       // console.log("this is update blog", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("blog updated");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
@@ -206,6 +225,7 @@ const CreateProvider2 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("blog updated failed");
         setErrorShow(true);
         setTimeout(() => {
@@ -214,6 +234,7 @@ const CreateProvider2 = ({ children }) => {
         setServerError("something went wrong please try again");
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.log(error);
     }
   };
@@ -223,6 +244,8 @@ const CreateProvider2 = ({ children }) => {
   // from here
 
   const DeleteBlog = async (Id) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to delete a blog");
@@ -242,6 +265,8 @@ const CreateProvider2 = ({ children }) => {
       const data = await response.json();
       // console.log("this is delete blog", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
+
         console.log("blog deleted");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
@@ -254,6 +279,8 @@ const CreateProvider2 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
+
         console.log("blog deleted failed");
         const serverMSG = data.msg;
         setErrorShow(true);
@@ -263,6 +290,8 @@ const CreateProvider2 = ({ children }) => {
         setServerError(serverMSG);
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
+
       console.log(error);
     }
   };
@@ -307,6 +336,7 @@ const CreateProvider2 = ({ children }) => {
         totalBlogCount,
         setCurrentPage,
         pageCount,
+        loading,
       }}
     >
       {children}

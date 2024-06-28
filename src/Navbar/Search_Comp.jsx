@@ -10,16 +10,17 @@ import Alert from "react-bootstrap/Alert";
 // libraries
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // icons
-import { FaSearch } from "react-icons/fa";
 import { FaArrowTurnDown } from "react-icons/fa6";
 import { IoPricetags } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteSweep } from "react-icons/md";
 
 function Search_Comp() {
-  const { searchResult, userSearch } = useContext(CreateContext4);
+  const { searchResult, userSearch, loading } = useContext(CreateContext4);
   //   console.log("thsi is search result", searchResult);
 
   if (searchResult.length === 0)
@@ -29,6 +30,10 @@ function Search_Comp() {
       </h3>
     );
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       {userSearch !== "" && searchResult ? (
@@ -38,6 +43,22 @@ function Search_Comp() {
           {userSearch}
         </h1>
       ) : null}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
+      )}
 
       <div className="AllBlogMainSetup">
         {searchResult.map((blog) => {

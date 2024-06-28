@@ -12,6 +12,7 @@ const CreateContext6 = createContext();
 const CreateProvider6 = ({ children }) => {
   const { setIsLoggedIn } = useContext(CreateContext1);
   // all states here
+  const [loading, setLoading] = useState(false);
 
   // all alerts
   const [show, setShowAlert] = useState(false);
@@ -24,6 +25,8 @@ const CreateProvider6 = ({ children }) => {
   // handle reset password
 
   const ResetPassword = async (email) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to reset password");
@@ -44,6 +47,7 @@ const CreateProvider6 = ({ children }) => {
       const data = await response.json();
       //   console.log("reset password", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("token sent to mail");
         const serverMSG = data.msg;
         setShowAlert(true);
@@ -53,6 +57,7 @@ const CreateProvider6 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("failed to send token");
         const serverMSG = data.msg;
         setErrorShow(true);
@@ -62,12 +67,15 @@ const CreateProvider6 = ({ children }) => {
         setServerError(serverMSG);
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.log("there is error in reset password token sending", error);
     }
   };
 
   // handle update password
   const UpdatePassword = async (password, confirmPassword, tokenid) => {
+    setLoading(true); // Show loading spinner
+
     // console.log("this is token id", tokenid);
     const token = localStorage.getItem("token");
     if (!token) {
@@ -89,6 +97,7 @@ const CreateProvider6 = ({ children }) => {
       const data = await response.json();
       // console.log("update password", data);
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("password updated");
         const serverMSG = data.msg;
         setShowAlert(true);
@@ -100,6 +109,7 @@ const CreateProvider6 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG);
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("failed to update password");
         const serverMSG = data.msg;
         setErrorShow(true);
@@ -109,6 +119,7 @@ const CreateProvider6 = ({ children }) => {
         setServerError(serverMSG);
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.log("there is error in update password", error);
     }
   };
@@ -122,6 +133,7 @@ const CreateProvider6 = ({ children }) => {
         serverMsg,
         serverError,
         UpdatePassword,
+        loading,
       }}
     >
       {children}

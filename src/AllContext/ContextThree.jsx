@@ -7,6 +7,7 @@ const CreateProvider3 = ({ children }) => {
   const [profile, setProfile] = useState([]);
   const [getProfileId, setGetProfileId] = useState("");
   const [getProfileBody, setGetProfileBody] = useState({});
+  const [loading, setLoading] = useState(false);
 
   // all alerts
   const [show, setShowAlert] = useState(false);
@@ -26,6 +27,8 @@ const CreateProvider3 = ({ children }) => {
   // from here
 
   const fetchprofile = async () => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to get your profile");
@@ -46,15 +49,20 @@ const CreateProvider3 = ({ children }) => {
       const data = await response.json();
       // console.log("this is profile", data);
       if (data.userProfile.length === 0) {
+        setLoading(false); // Hide loading spinner
+        setNoProfile("No Profile Found");
         console.log("Empty profile");
       }
       if (data.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("Profile fetched");
         setProfile(data.userProfile);
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("Profile fetched failed");
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.error("Error fetching blog:", error);
     }
   };
@@ -85,6 +93,7 @@ const CreateProvider3 = ({ children }) => {
         setErrorShow,
         GetId,
         fetchprofile,
+        loading,
       }}
     >
       {children}

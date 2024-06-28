@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { Link, Outlet } from "react-router-dom";
 import { format } from "date-fns";
 import ReactPaginate from "react-paginate";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -32,7 +34,7 @@ function AllBlog() {
     allBlog,
     pageCount,
     setCurrentPage,
-    // totalBlogCount,
+    loading,
     GetBlogId,
     DeleteBlog,
     show,
@@ -89,6 +91,10 @@ function AllBlog() {
     setCurrentPage(event.selected + 1); // event.selected starts from 0, so add 1
   };
 
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
   return (
     <>
       {show && (
@@ -100,6 +106,22 @@ function AllBlog() {
         <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
           {serverError}
         </Alert>
+      )}
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
       )}
       <Outlet />
       <Form

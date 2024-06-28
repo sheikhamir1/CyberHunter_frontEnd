@@ -1,10 +1,12 @@
 // all hooks
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { CreateContext3 } from "../AllContext/ContextThree";
 
 // libraries
 import { useForm } from "react-hook-form";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -27,6 +29,8 @@ function CreateProfile() {
     setShowAlert,
   } = React.useContext(CreateContext3);
 
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const {
     register,
@@ -37,6 +41,9 @@ function CreateProfile() {
 
   //  start upload
   const onSubmit = async (data) => {
+    setLoading(true); // Show loading spinner
+    window.scrollTo(0, 0);
+
     const formData = new FormData();
     formData.append("username", data.username);
     formData.append("bio", data.bio);
@@ -64,6 +71,7 @@ function CreateProfile() {
         );
         const responseData = await response.json();
         if (responseData.success === true) {
+          setLoading(false); // Hide loading spinner
           console.log("User Profile created ");
           setTrackProfile((prev) => prev + 1);
           const serverMSG = responseData.msg;
@@ -75,6 +83,7 @@ function CreateProfile() {
           }, 3000);
           setServerMsg(serverMSG + " please Wait...");
         } else if (responseData.success === false) {
+          setLoading(false); // Hide loading spinner
           console.log("User Profile cration failed ");
           const serverMSG = responseData.msg;
           setErrorShow(true);
@@ -85,12 +94,19 @@ function CreateProfile() {
           setServerError(serverMSG);
         }
       } catch (error) {
+        setLoading(false); // Hide loading spinner
         console.error("Error creating profile:", error);
       }
     };
     CreateProfile();
     reset();
   };
+
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
+
   return (
     <>
       {show && (
@@ -103,9 +119,24 @@ function CreateProfile() {
           {serverError}
         </Alert>
       )}
-
       <ProfileNavbar_Comp />
       <Outlet />
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
+      )}
       <h3 style={{ marginTop: "30px", textAlign: "center" }}>Create Profile</h3>
 
       <Form

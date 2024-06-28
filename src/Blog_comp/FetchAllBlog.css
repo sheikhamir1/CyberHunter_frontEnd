@@ -58,9 +58,11 @@ img {
 }
 .pagination {
   display: flex;
+  justify-content: center;
+  align-items: center;
   list-style: none;
   padding: 0;
-  justify-content: center;
+  margin: 0;
 }
 
 .pagination li {
@@ -83,4 +85,7 @@ ul.pagination {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* position: fixed;
+  bottom: 0;
+  width: 100%; */
 }

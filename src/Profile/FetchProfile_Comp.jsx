@@ -5,6 +5,8 @@ import { CreateContext3 } from "../AllContext/ContextThree";
 // libraries
 import { format } from "date-fns";
 import { Link, Outlet } from "react-router-dom";
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+import { css } from "@emotion/react";
 
 // bootstrap components
 import Alert from "react-bootstrap/Alert";
@@ -24,7 +26,7 @@ import { FiEdit3 } from "react-icons/fi";
 import ProfileNavbar_Comp from "./ProfileNavbar_Comp";
 
 function Profile() {
-  const { profile, emptyProfile, GetId } = React.useContext(CreateContext3);
+  const { profile, GetId, loading } = React.useContext(CreateContext3);
   const [email, setEmail] = useState([]);
   const [noProfile, setNoProfile] = useState(false);
 
@@ -61,10 +63,17 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    if (profile.length === 0) {
+    if (profile[0] === undefined) {
       setNoProfile("opps! No profile found , please create new Profile");
     }
   }, [profile]);
+
+  // console.log("this is profile", profile);
+
+  const spinnerCustomCss = css`
+    margin-top: 0; /* Removed margin-top to allow proper centering */
+    border-color: blue;
+  `;
 
   return (
     <>
@@ -80,6 +89,23 @@ function Profile() {
       >
         {noProfile}
       </h3>
+
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+          }}
+        >
+          <LoadingSpinner
+            loading={loading}
+            size={100}
+            color="red"
+            customCss={spinnerCustomCss}
+          />
+        </div>
+      )}
       {profile.map((profile) => {
         const isoCreatedAt = format(
           new Date(profile.createdAt),
