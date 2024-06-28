@@ -101,6 +101,7 @@ function UpdateProfile() {
         } else if (response2.success === false) {
           console.log("User Profile updated failed ");
           const serverMSG = response2.msg;
+          window.scrollTo(0, 0);
           setErrorShow(true);
           setTimeout(() => {
             setErrorShow(false);

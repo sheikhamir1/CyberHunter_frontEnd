@@ -66,12 +66,13 @@ function UserLogin() {
         }, 3000);
         setServerMsg(serverMSG);
       } else if (postResponse.success === false) {
+        const serverMSG = postResponse.msg;
         console.log("user login failed");
         setErrorShow(true);
         setTimeout(() => {
           setErrorShow(false);
         }, 3000);
-        setServerError(postResponse.message);
+        setServerError(serverMSG);
       }
       reset();
     } catch (errors) {
