@@ -56,6 +56,7 @@ function CreateBlog() {
   } = useForm({});
 
   const onSubmit1 = async (data) => {
+    window.scrollTo(0, 0);
     const title = data.title;
     const categories = data.categories;
     const isPublic = data.isPublic;

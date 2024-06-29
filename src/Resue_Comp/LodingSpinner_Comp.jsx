@@ -2,6 +2,7 @@
 import React from "react";
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
+import "./spinner.css";
 
 const override = css`
   display: block;
@@ -11,7 +12,7 @@ const override = css`
 
 const LoadingSpinner = ({
   loading,
-  size = 100,
+  size = 50,
   color = "#123abc",
   customCss,
 }) => {
