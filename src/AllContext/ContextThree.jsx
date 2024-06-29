@@ -36,7 +36,7 @@ const CreateProvider3 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        "http://localhost:3000/api/user/fetchprofile",
+        `${import.meta.env.VITE_API_URL}/api/user/fetchprofile`,
         {
           method: "GET",
           headers: {

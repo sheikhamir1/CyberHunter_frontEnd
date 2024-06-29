@@ -20,7 +20,7 @@ const CreateProvider5 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/${postID}/likepost`,
+        `${import.meta.env.VITE_API_URL}/api/blog/${postID}/likepost`,
         {
           method: "POST",
           headers: {
@@ -58,7 +58,7 @@ const CreateProvider5 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/${postID}/dislikepost`,
+        `${import.meta.env.VITE_API_URL}/api/blog/${postID}/dislikepost`,
         {
           method: "DELETE",
           headers: {
@@ -101,7 +101,7 @@ const CreateProvider5 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/${postID}/comment`,
+        `${import.meta.env.VITE_API_URL}/api/blog/${postID}/comment`,
         {
           method: "POST",
           headers: {
@@ -139,7 +139,7 @@ const CreateProvider5 = ({ children }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/${id}/editcomment`,
+        `${import.meta.env.VITE_API_URL}/api/blog/${id}/editcomment`,
         {
           method: "PUT",
           headers: {
@@ -177,7 +177,7 @@ const CreateProvider5 = ({ children }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/${commentId}/deletecomment`,
+        `${import.meta.env.VITE_API_URL}/api/blog/${commentId}/deletecomment`,
         {
           method: "DELETE",
           headers: {

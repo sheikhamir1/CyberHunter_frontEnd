@@ -54,7 +54,9 @@ const CreateProvider2 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/fetchblogs?page=${page}&limit=${limit}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/blog/fetchblogs?page=${page}&limit=${limit}`,
         {
           method: "GET",
           headers: {
@@ -94,7 +96,7 @@ const CreateProvider2 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        "http://localhost:3000/api/blog/privetblog",
+        `${import.meta.env.VITE_API_URL}/api/blog/privetblog`,
         {
           method: "GET",
           headers: {
@@ -135,7 +137,7 @@ const CreateProvider2 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        "http://localhost:3000/api/blog/createblog",
+        `${import.meta.env.VITE_API_URL}/api/blog/createblog`,
         {
           method: "POST",
           headers: {
@@ -194,7 +196,7 @@ const CreateProvider2 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/updateblog/${UpdateBlogId}`,
+        `${import.meta.env.VITE_API_URL}/api/blog/updateblog/${UpdateBlogId}`,
         {
           method: "PUT",
           headers: {
@@ -248,7 +250,7 @@ const CreateProvider2 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/deleteblog/${Id}`,
+        `${import.meta.env.VITE_API_URL}/api/blog/deleteblog/${Id}`,
         {
           method: "DELETE",
           headers: {

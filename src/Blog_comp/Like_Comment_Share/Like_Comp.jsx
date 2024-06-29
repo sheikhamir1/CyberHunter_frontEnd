@@ -78,7 +78,7 @@ function Like_Comp() {
         return;
       }
       const response = await fetch(
-        `http://localhost:3000/api/blog/${id}/fetchcomments`,
+        `${import.meta.env.VITE_API_URL}/api/blog/${id}/fetchcomments`,
         {
           method: "GET",
           headers: {

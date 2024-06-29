@@ -35,7 +35,7 @@ const CreateProvider6 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/user/reset-password`,
+        `${import.meta.env.VITE_API_URL}/api/user/reset-password`,
         {
           method: "POST",
           headers: {
@@ -85,7 +85,7 @@ const CreateProvider6 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/user/reset-password/${tokenid}`,
+        `${import.meta.env.VITE_API_URL}/api/user/reset-password/${tokenid}`,
         {
           method: "PUT",
           headers: {
@@ -142,7 +142,7 @@ const CreateProvider6 = ({ children }) => {
     }
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/blogsbycategory/${category}`,
+        `${import.meta.env.VITE_API_URL}/api/blog/blogsbycategory/${category}`,
         {
           method: "GET",
           headers: {

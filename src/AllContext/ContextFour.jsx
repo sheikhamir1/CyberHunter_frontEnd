@@ -50,7 +50,9 @@ const CreateProvider4 = ({ children }) => {
   const PublicBlog = async (page) => {
     setLoading(true); // Show loading spinner
     const response = await fetch(
-      `http://localhost:3000/api/blog/publicblog?page=${page}&limit=${limit}`,
+      `${
+        import.meta.env.VITE_API_URL
+      }/api/blog/publicblog?page=${page}&limit=${limit}`,
       {
         method: "GET",
         headers: {
@@ -82,17 +84,20 @@ const CreateProvider4 = ({ children }) => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:3000/api/user/update`, {
-        method: "PUT", // or 'PUT' if that is what your backend expects
-        headers: {
-          "Content-Type": "application/json",
-          "Auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          fullName: data.fullName,
-          email: data.email,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/user/update`,
+        {
+          method: "PUT", // or 'PUT' if that is what your backend expects
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            fullName: data.fullName,
+            email: data.email,
+          }),
+        }
+      );
       const userEmailData = await response.json();
       console.log("userEmailData", userEmailData);
       if (userEmailData.success === true) {
@@ -133,7 +138,7 @@ const CreateProvider4 = ({ children }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/blog/search?query=${data}`,
+        `${import.meta.env.VITE_API_URL}/api/blog/search?query=${data}`,
         {
           method: "GET", // or 'PUT' if that is what your backend expects
           headers: {

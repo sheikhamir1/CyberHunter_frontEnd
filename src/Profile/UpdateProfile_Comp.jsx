@@ -81,7 +81,9 @@ function UpdateProfile() {
       }
       try {
         const response = await fetch(
-          `http://localhost:3000/api/user/profileupdate/${getProfileId}`,
+          `${
+            import.meta.env.VITE_API_URL
+          }/api/user/profileupdate/${getProfileId}`,
           {
             method: "PUT",
             headers: {

@@ -15,7 +15,7 @@ function Verify_email() {
   }, []);
   const fetchMsg = async () => {
     const response = await fetch(
-      `http://localhost:3000/api/user/verify-email/${token}`
+      `${import.meta.env.VITE_API_URL}/api/user/verify-email/${token}`
     );
     const data = await response.json();
     console.log(data);

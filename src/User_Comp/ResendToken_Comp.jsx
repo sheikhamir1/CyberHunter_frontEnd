@@ -27,7 +27,7 @@ function ResendToken_Comp() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/user/resend-verification-email",
+        `${import.meta.env.VITE_API_URL}/api/user/resend-verification-email`,
         {
           method: "POST",
           headers: {

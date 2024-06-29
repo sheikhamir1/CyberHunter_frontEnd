@@ -38,7 +38,7 @@ function UpdateEmail_Comp() {
     const GetUserEmail = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/user/fetchemail",
+          `${import.meta.env.VITE_API_URL}/api/user/fetchemail`,
           {
             method: "GET",
             headers: {

@@ -60,7 +60,7 @@ function CreateProfile() {
       }
       try {
         const response = await fetch(
-          "http://localhost:3000/api/user/Createprofile",
+          `${import.meta.env.VITE_API_URL}/api/user/Createprofile`,
           {
             method: "POST",
             headers: {
