@@ -22,7 +22,7 @@ function HomePageContent_Comp() {
           <img
             className="pic1 animate-on-load"
             src="../../public/pic3.png"
-            alt=""
+            alt="this is pic 3"
           />
         </div>
       </div>
@@ -41,7 +41,7 @@ function HomePageContent_Comp() {
           <img
             className="pic1 animate-on-load"
             src="../../public/pic4.png"
-            alt=""
+            alt="this is pic 4"
           />
         </div>
       </div>
