@@ -50,7 +50,6 @@ const CreateProvider3 = ({ children }) => {
       // console.log("this is profile", data);
       if (data.userProfile.length === 0) {
         setLoading(false); // Hide loading spinner
-        setNoProfile("No Profile Found");
         console.log("Empty profile");
       }
       if (data.success === true) {
@@ -94,6 +93,7 @@ const CreateProvider3 = ({ children }) => {
         GetId,
         fetchprofile,
         loading,
+        setLoading,
       }}
     >
       {children}

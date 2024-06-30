@@ -91,10 +91,6 @@ function AllBlog() {
     setCurrentPage(event.selected + 1); // event.selected starts from 0, so add 1
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
   return (
     <>
       {show && (
@@ -107,22 +103,7 @@ function AllBlog() {
           {serverError}
         </Alert>
       )}
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+      {loading && <LoadingSpinner loading={loading} size={20} />}
       <Outlet />
       <Form
         className="formSetupSelector"
@@ -240,14 +221,14 @@ function AllBlog() {
                   <Card.Body style={{ fontSize: "12px" }}>
                     <Card.Title style={{ fontSize: "12px" }}>
                       <strong>Title : </strong>
-                      {blog.title}
+                      {blog.title || null}
                     </Card.Title>
                     <strong>Content : </strong>
                     <FaArrowTurnDown
                       style={{ fontSize: "20px", paddingTop: "4px" }}
                     />
                     <div
-                      dangerouslySetInnerHTML={{ __html: blog.content }}
+                      dangerouslySetInnerHTML={{ __html: blog.content || null }}
                       // className="AllBlogImageSetup"
                       style={{
                         height: "-webkit-fill-available",
@@ -261,7 +242,7 @@ function AllBlog() {
                       }}
                     >
                       <strong>Categories : </strong>
-                      <strong>{blog.categories}</strong>
+                      <strong>{blog.categories || null}</strong>
                     </Card.Text>
 
                     <Card.Title style={{ fontSize: "12px" }}>
@@ -282,7 +263,7 @@ function AllBlog() {
                             <strong
                               style={{ color: "brown", marginRight: "5px" }}
                             >
-                              {tag}
+                              {tag || null}
                               {","}
                             </strong>
                           </div>
@@ -292,31 +273,27 @@ function AllBlog() {
 
                     <Card.Text>
                       <strong>Created on : </strong>
-                      <strong>{isoCreatedAt}</strong>
+                      <strong>{isoCreatedAt || null}</strong>
                     </Card.Text>
 
                     <Card.Text>
                       <strong>Update on : </strong>
-                      <strong>{isoUpdateAt}</strong>
+                      <strong>{isoUpdateAt || null}</strong>
                     </Card.Text>
                     <Card.Title
                       className="AllBlogCardTitle"
                       style={{ fontSize: "12px" }}
                     >
                       <strong>Posted by : </strong>
-                      <strong>{blog.author.fullName}</strong>
+                      <strong>{blog.author.fullName || null}</strong>
                     </Card.Title>
 
-                    {/* <Card.Title className="AllBlogCardTitle">
-                  <strong>publicAt : </strong>
-                  <strong>{isoPublicAt}</strong>
-                </Card.Title> */}
                     <Card.Text>
                       <strong style={{ fontSize: "12px", fontWeight: "bold" }}>
                         This Post is :{" "}
                       </strong>
                       <strong style={{ fontSize: "12px", fontWeight: "bold" }}>
-                        {blog.isPublic ? "Public" : "private"}
+                        {blog.isPublic ? "Public" : "private" || null}
                       </strong>
                     </Card.Text>
                   </Card.Body>

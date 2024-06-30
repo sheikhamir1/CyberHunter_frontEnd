@@ -8,7 +8,6 @@ import { CreateContext3 } from "../AllContext/ContextThree";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -93,11 +92,6 @@ function UserLogin() {
     }
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
-
   return (
     <>
       {show && (
@@ -110,22 +104,7 @@ function UserLogin() {
           {serverError}
         </Alert>
       )}
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+
       <div className="LoginFormSetup">
         <Form className="Setup" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3 Setup2" controlId="formBasicEmail">
@@ -188,8 +167,23 @@ function UserLogin() {
               </span>
             )}
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
+          <Button
+            variant="primary"
+            type="submit"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              height: "38px",
+            }}
+          >
+            {
+              loading ? (
+                <LoadingSpinner loading={loading} size={20} />
+              ) : (
+                "Submit"
+              )
+              // null
+            }
           </Button>
         </Form>
       </div>

@@ -7,7 +7,6 @@ import { CreateContext6 } from "../AllContext/ContextSix";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -21,9 +20,9 @@ import { IoPricetags } from "react-icons/io5";
 import "./FetchAllBlog.css";
 
 function BlogsCategory() {
-  const { setTrackPublicBlog, loading } = useContext(CreateContext4);
+  const { setTrackPublicBlog } = useContext(CreateContext4);
 
-  const { AllblogCategory } = useContext(CreateContext6);
+  const { AllblogCategory, loading } = useContext(CreateContext6);
   //   console.log("AllblogCategory", AllblogCategory);
   if (AllblogCategory.length === 0)
     return <h1 style={{ textAlign: "center" }}>no blog found</h1>;
@@ -32,28 +31,10 @@ function BlogsCategory() {
     setTrackPublicBlog((prev) => prev + 1);
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
   return (
     <>
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+      {loading && <LoadingSpinner loading={loading} />}
+
       <div className="AllBlogMainSetup">
         {AllblogCategory.map((blog) => {
           const isoCreatedAt = format(

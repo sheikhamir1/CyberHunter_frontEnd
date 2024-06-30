@@ -5,6 +5,7 @@ import { CreateContext4 } from "../../AllContext/ContextFour";
 
 // libraries
 import { useForm } from "react-hook-form";
+import LoadingSpinner from "../../Resue_Comp/LodingSpinner_Comp";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -15,7 +16,7 @@ import Alert from "react-bootstrap/Alert";
 import ProfileNavbar_Comp from "../ProfileNavbar_Comp";
 
 function UpdateEmail_Comp() {
-  const { setTrackProfile } = useContext(CreateContext3);
+  const { setTrackProfile, setLoading, loading } = useContext(CreateContext3);
   const { updateEmail, show, errorShow, serverMsg, serverError } =
     useContext(CreateContext4);
 
@@ -27,15 +28,17 @@ function UpdateEmail_Comp() {
     setValue,
   } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
+    // console.log(data);
     updateEmail(data);
-    setTrackProfile((prev) => prev + 1);
+    // setTrackProfile((prev) => prev + 1);
   };
 
   // handle fetch email
 
   useEffect(() => {
     const GetUserEmail = async () => {
+      setLoading(true); // Show loading spinner
+
       try {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/user/fetchemail`,
@@ -54,11 +57,17 @@ function UpdateEmail_Comp() {
         setValue("fullName", data.LoginDetails.fullName);
 
         if (data.success === true) {
+          setLoading(false); // Hide loading spinner
+
           console.log("user email fetched");
         } else if (data.success === false) {
+          setLoading(false); // Hide loading spinner
+
           console.log("user email fetch failed");
         }
       } catch (error) {
+        setLoading(false); // Hide loading spinner
+
         console.error("Error fetching blog:", error);
       }
     };
@@ -79,7 +88,9 @@ function UpdateEmail_Comp() {
           {serverError}
         </Alert>
       )}
-      <h3 style={{ margin: "30px" }}>Edit Your Account</h3>
+      {loading && <LoadingSpinner loading={loading} />}
+
+      <h3 style={{ margin: "30px" }}>Edit Your Email</h3>
 
       <div className="SetUpFFormEditAC" style={{ margin: "30px" }}>
         <Form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>

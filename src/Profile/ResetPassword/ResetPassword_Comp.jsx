@@ -8,7 +8,6 @@ import Button from "react-bootstrap/Button";
 
 // libraries
 import LoadingSpinner from "../../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // other components
 import ProfileNavbar_Comp from "../ProfileNavbar_Comp";
@@ -24,10 +23,6 @@ function ResetPassword_Comp() {
     setInputValue("");
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
   return (
     <>
       <ProfileNavbar_Comp />
@@ -42,22 +37,7 @@ function ResetPassword_Comp() {
         </Alert>
       )}
 
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            // marginTop: "50px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+      {loading && <LoadingSpinner loading={loading} />}
 
       <div
         className="set"

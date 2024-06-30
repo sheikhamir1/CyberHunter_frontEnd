@@ -4,7 +4,6 @@ import React, { useContext, useState } from "react";
 // libraries
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Alert from "react-bootstrap/Alert";
@@ -36,6 +35,7 @@ function ResendToken_Comp() {
           body: JSON.stringify({ email }),
         }
       );
+      console.log("resend token response", response);
 
       const data = await response.json();
       //   console.log("resend token result", data);
@@ -66,10 +66,6 @@ function ResendToken_Comp() {
     setEmail("");
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
   return (
     <>
       {show && (
@@ -82,22 +78,7 @@ function ResendToken_Comp() {
           {serverError}
         </Alert>
       )}
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+
       <div
         className="set"
         style={{
@@ -132,13 +113,18 @@ function ResendToken_Comp() {
             <Button
               style={{
                 width: "180px",
+                height: "38px",
               }}
               type="submit"
               data-mdb-ripple-init
               className="btn btn-primary"
               onClick={HandleClick}
             >
-              Get varification token
+              {loading ? (
+                <LoadingSpinner loading={loading} size={20} />
+              ) : (
+                " Get varification token"
+              )}
             </Button>
             <div className="d-flex justify-content-between mt-4"></div>
           </div>

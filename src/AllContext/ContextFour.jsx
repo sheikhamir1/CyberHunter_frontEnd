@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const CreateContext4 = createContext();
 
 const CreateProvider4 = ({ children }) => {
-  const { fetchprofile } = useContext(CreateContext3);
+  const { fetchprofile, setTrackProfile } = useContext(CreateContext3);
   //  all state here
   const [publicBlog, setPublicBlog] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,35 +49,43 @@ const CreateProvider4 = ({ children }) => {
   // from here
   const PublicBlog = async (page) => {
     setLoading(true); // Show loading spinner
-    const response = await fetch(
-      `${
-        import.meta.env.VITE_API_URL
-      }/api/blog/publicblog?page=${page}&limit=${limit}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+
+    try {
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/blog/publicblog?page=${page}&limit=${limit}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      // console.log("all Public blog fetched in contextfour", data);
+      if (data.success === true) {
+        setLoading(false); // Hide loading spinner
+        console.log("public blog fetched");
+        setPublicBlog(data.data);
+        setCurrentPage(data.page);
+        setPageCount(data.pages);
+        setTotalBlogCount(data.total);
+      } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
+        console.log("public blog fetch failed");
       }
-    );
-    const data = await response.json();
-    // console.log("all Public blog fetched in contextfour", data);
-    if (data.success === true) {
+    } catch (error) {
       setLoading(false); // Hide loading spinner
-      console.log("public blog fetched");
-      setPublicBlog(data.data);
-      setCurrentPage(data.page);
-      setPageCount(data.pages);
-      setTotalBlogCount(data.total);
-    } else if (data.success === false) {
-      setLoading(false); // Hide loading spinner
-      console.log("public blog fetch failed");
+      console.error("Error fetching blog:", error);
     }
   };
 
   // update email handle here
 
   const updateEmail = async (data) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to Fetch blog again");
@@ -99,10 +107,11 @@ const CreateProvider4 = ({ children }) => {
         }
       );
       const userEmailData = await response.json();
-      console.log("userEmailData", userEmailData);
+      // console.log("userEmailData", userEmailData);
       if (userEmailData.success === true) {
+        setLoading(false); // Hide loading spinner
         console.log("Email updated");
-        setTrackUpdateEmail((prev) => prev + 1);
+        setTrackProfile((prev) => prev + 1);
         const serverMSG = userEmailData.msg;
         setShowAlert(true);
         setTimeout(() => {
@@ -111,6 +120,7 @@ const CreateProvider4 = ({ children }) => {
         }, 3000);
         setServerMsg(serverMSG + " please Wait...");
       } else if (userEmailData.success === false) {
+        setLoading(false); // Hide loading spinner
         console.log("Email update failed");
         const serverMSG = userEmailData.msg;
         setErrorShow(true);
@@ -120,6 +130,7 @@ const CreateProvider4 = ({ children }) => {
         setServerError(serverMSG);
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
       console.error("Error updating profile:", error);
     }
   };
@@ -153,7 +164,6 @@ const CreateProvider4 = ({ children }) => {
         setLoading(false); // Hide loading spinner
         console.log("Fetch Search result");
         setSearchResult(searchData.data);
-        navigate("/Search_Comp");
       } else if (searchData.success === false) {
         setLoading(false); // Hide loading spinner
         console.log("search blog fetch failed");

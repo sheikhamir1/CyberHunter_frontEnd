@@ -8,7 +8,6 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";
@@ -37,28 +36,9 @@ function PublicBlogs() {
     setCurrentPage(event.selected + 1); // event.selected starts from 0, so add 1
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
   return (
     <>
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+      {loading && <LoadingSpinner loading={loading} />}
       <div className="AllBlogMainSetup">
         {publicBlog.map((blog) => {
           const isoCreatedAt = format(
@@ -174,18 +154,20 @@ function PublicBlogs() {
           );
         })}
       </div>
-      <ReactPaginate
-        previousLabel={"previous"}
-        nextLabel={"next"}
-        breakLabel={"..."}
-        breakClassName={"break-me"}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination"}
-        activeClassName={"active"}
-      />
+      <div className="setPagination">
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+        />
+      </div>
     </>
   );
 }

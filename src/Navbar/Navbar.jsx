@@ -52,6 +52,7 @@ function MyNavbar() {
     // console.log(data);
     if (localStorage.getItem("token")) {
       Search(data.search);
+      navigate("/Search_Comp");
       reset();
     } else {
       navigate("/login");
@@ -76,7 +77,7 @@ function MyNavbar() {
             >
               <Nav.Link className="nav-link">Home</Nav.Link>
               <Nav.Link className="nav-link">About</Nav.Link>
-              <Nav.Link className="nav-link">Tutorials</Nav.Link>
+              {/* <Nav.Link className="nav-link">Tutorials</Nav.Link> */}
               {isLoggedIn ? (
                 <NavDropdown
                   title={

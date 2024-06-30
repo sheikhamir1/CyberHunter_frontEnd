@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  background-color: #f3d7b475;
+  background-color: #ffedd675;
 }
 .formSetupSelector {
   background-color: #f3d7b475;
@@ -85,7 +85,12 @@ ul.pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* position: fixed;
+  position: fixed;
   bottom: 0;
-  width: 100%; */
+  width: 100%;
+}
+.setPagination {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
 }

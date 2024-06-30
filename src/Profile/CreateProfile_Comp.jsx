@@ -6,7 +6,6 @@ import { CreateContext3 } from "../AllContext/ContextThree";
 import { useForm } from "react-hook-form";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -102,11 +101,6 @@ function CreateProfile() {
     reset();
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
-
   return (
     <>
       {show && (
@@ -121,22 +115,8 @@ function CreateProfile() {
       )}
       <ProfileNavbar_Comp />
       <Outlet />
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+      {loading && <LoadingSpinner loading={loading} />}
+
       <h3 style={{ marginTop: "30px", textAlign: "center" }}>Create Profile</h3>
 
       <Form

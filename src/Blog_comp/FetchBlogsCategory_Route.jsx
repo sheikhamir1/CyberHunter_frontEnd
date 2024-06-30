@@ -1,12 +1,12 @@
 // all hooks
 import React, { useContext } from "react";
 import { CreateContext6 } from "../AllContext/ContextSix";
+import { CreateContext4 } from "../AllContext/ContextFour";
 
 // libraries
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Button from "react-bootstrap/Button";
@@ -18,6 +18,7 @@ import "./CreateBlog.css";
 
 function FetchBlogsCategory_Route() {
   const { BlogsCategory } = useContext(CreateContext6);
+  const { loading } = useContext(CreateContext4);
 
   const navigate = useNavigate();
 
@@ -37,13 +38,15 @@ function FetchBlogsCategory_Route() {
 
   return (
     <>
+      {/* {loading && <LoadingSpinner loading={loading} />} */}
+
       {localStorage.getItem("token") ? (
         <>
           <h3
             style={{
               textAlign: "center",
               fontWeight: "bold",
-              backgroundColor: "#f3d7b475",
+              backgroundColor: "#ffedd675",
               padding: "10px",
               margin: "0px",
             }}
@@ -53,7 +56,7 @@ function FetchBlogsCategory_Route() {
           <Form
             onSubmit={handleSubmit(onSubmit)}
             style={{
-              backgroundColor: "#f3d7b475",
+              backgroundColor: "#ffedd675",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

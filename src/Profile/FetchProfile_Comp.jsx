@@ -6,7 +6,6 @@ import { CreateContext3 } from "../AllContext/ContextThree";
 import { format } from "date-fns";
 import { Link, Outlet } from "react-router-dom";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Alert from "react-bootstrap/Alert";
@@ -70,11 +69,6 @@ function Profile() {
 
   // console.log("this is profile", profile);
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
-
   return (
     <>
       <ProfileNavbar_Comp />
@@ -90,22 +84,8 @@ function Profile() {
         {noProfile}
       </h3>
 
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={100}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
+      {loading && <LoadingSpinner loading={loading} />}
+
       {profile.map((profile) => {
         const isoCreatedAt = format(
           new Date(profile.createdAt),

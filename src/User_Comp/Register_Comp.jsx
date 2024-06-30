@@ -11,7 +11,6 @@ import Alert from "react-bootstrap/Alert";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // Css
 import "./LoginStyle.css";
@@ -59,7 +58,7 @@ function MyRegister() {
       );
 
       const postResponse = await response.json();
-      console.log(postResponse);
+      // console.log(postResponse);
       if (postResponse.success === true) {
         setLoading(false); // Hide loading spinner
 
@@ -92,10 +91,6 @@ function MyRegister() {
     }
   };
 
-  const spinnerCustomCss = css`
-    margin-top: 0; /* Removed margin-top to allow proper centering */
-    border-color: blue;
-  `;
   return (
     <>
       {show && (
@@ -109,22 +104,6 @@ function MyRegister() {
         </Alert>
       )}
 
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "100px",
-          }}
-        >
-          <LoadingSpinner
-            loading={loading}
-            size={70}
-            color="red"
-            customCss={spinnerCustomCss}
-          />
-        </div>
-      )}
       <div className="LoginFormSetup">
         <Form className="Setup" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3 Setup2" controlId="formBasicText">
@@ -242,9 +221,20 @@ function MyRegister() {
           <Button
             variant="primary"
             type="submit"
-            style={{ marginRight: "10px", marginBottom: "20px" }}
+            style={{
+              marginRight: "10px",
+              marginBottom: "20px",
+              height: "38px",
+            }}
           >
-            Submit
+            {
+              loading ? (
+                <LoadingSpinner loading={loading} size={20} />
+              ) : (
+                "Submit"
+              )
+              // null
+            }
           </Button>
           {/* <ResendToken_Comp /> */}
           <Link
