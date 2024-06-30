@@ -61,6 +61,10 @@ function PublicLike_Comp() {
   };
 
   const handleComment = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth", // Optional: Smooth scrolling animation
+    });
     setShowComment(!showComment);
     setTrackComments((prev) => prev + 1);
   };

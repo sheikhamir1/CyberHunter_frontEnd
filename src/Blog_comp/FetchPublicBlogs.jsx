@@ -90,7 +90,11 @@ function PublicBlogs() {
                 <div
                   dangerouslySetInnerHTML={{ __html: blog.content }}
                   // className="AllBlogImageSetup"
-                  style={{ height: "-webkit-fill-available", width: "260px" }}
+                  style={{
+                    height: "fit-content",
+                    width: "auto",
+                  }}
+                  // style={{ height: "-webkit-fill-available", width: "260px" }}
                   // style={{ height: "auto", width: "-webkit-fill-available" }}
                 />
                 <Card.Text

@@ -23,9 +23,9 @@
   width: fit-content;
 }
 img {
-  /* height: 500px;
-  max-height: 600px; */
+  height: -webkit-fill-available;
   max-width: -webkit-fill-available;
+  overflow: scroll;
 }
 .AllBlogCardTitle {
   font-size: 14px;
