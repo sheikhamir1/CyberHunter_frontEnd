@@ -1,0 +1,18 @@
+.bg-body-tertiary {
+  background-color: #5399d5 !important;
+}
+.nav-link {
+  text-decoration: none;
+  font-weight: bold;
+  color: aliceblue;
+  padding: 0px;
+}
+button.btn.btn-outline-success {
+  color: rgb(0, 0, 0);
+  background-color: #5399d5;
+}
+
+button.btn.btn-outline-success:hover {
+  color: aliceblue;
+  background-color: rgb(0, 0, 0);
+}

@@ -1,0 +1,13 @@
+/* spinner.css */
+.clip-loader {
+  animation: clip-loader-animation 0.5s infinite linear;
+}
+
+@keyframes clip-loader-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

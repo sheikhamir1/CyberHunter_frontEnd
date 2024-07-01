@@ -1,0 +1,96 @@
+.AllBlogMainSetup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #ffedd675;
+}
+.formSetupSelector {
+  background-color: #f3d7b475;
+}
+.AllBlogCardSetup {
+  /* width: 80%; */
+  display: inline-flex;
+  flex-wrap: nowrap;
+  margin: 20px;
+  overflow-y: scroll;
+
+  height: 350px;
+  width: 300px;
+  border: 2px solid rgba(13, 110, 253, 0.25);
+}
+.AllBlogImageSetup {
+  /* width: -webkit-fill-available; */
+  width: fit-content;
+}
+img {
+  height: -webkit-fill-available;
+  max-width: -webkit-fill-available;
+  overflow: scroll;
+}
+.AllBlogCardTitle {
+  font-size: 14px;
+  font-weight: bold;
+}
+.SetUpdateAndDelete {
+  display: flex;
+  justify-content: flex-end;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 5px;
+  color: aqua;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #113a7050;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #16a7ac;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+.AllBlogCardSetup.card {
+  height: 350px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination li.active {
+  font-weight: bold;
+}
+
+.pagination li a {
+  text-decoration: none;
+  color: #333;
+}
+ul.pagination {
+  background-color: #5399d5;
+  margin: 0px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.setPagination {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+}

@@ -1,0 +1,11 @@
+.LoginFormSetup {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.Setup {
+  width: 500px;
+}
+.Setup2 {
+  max-width: 500px;
+}
