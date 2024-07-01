@@ -9,7 +9,6 @@ import { Link, Outlet } from "react-router-dom";
 import { format } from "date-fns";
 import ReactPaginate from "react-paginate";
 import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
-import { css } from "@emotion/react";
 
 // bootstrap components
 import Card from "react-bootstrap/Card";

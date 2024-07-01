@@ -5,14 +5,20 @@ import { CreateContext4 } from "./ContextFour";
 const CreateContext5 = createContext();
 
 const CreateProvider5 = ({ children }) => {
-  const { setTrackAllBlog } = useContext(CreateContext2);
+  const { setTrackAllBlog, GetAllBlog } = useContext(CreateContext2);
   const { setTrackPublicBlog } = useContext(CreateContext4);
 
-  // tracking the states
+  // all states here
+  const [loading, setLoading] = useState(false);
+  const [commentLoding, setCommentLoding] = useState(false);
+  const [editcommentLoding, setEditcommentLoding] = useState(false);
+  const [deletecommentLoding, setDeletecommentLoding] = useState(false);
 
   // like post
   // handle form here
   const likePost = async (postID) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to Fetch blog again");
@@ -38,11 +44,18 @@ const CreateProvider5 = ({ children }) => {
         console.log("post liked");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
+
+        await GetAllBlog();
+        setLoading(false); // Hide loading spinner
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
+
         console.log("post not liked");
         console.error("Error liking the post:", data.msg);
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
+
       console.error("Error liking the post:", error);
     }
   };
@@ -51,6 +64,8 @@ const CreateProvider5 = ({ children }) => {
   //  handle from here
 
   const dislikePost = async (postID) => {
+    setLoading(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to Fetch blog again");
@@ -76,13 +91,20 @@ const CreateProvider5 = ({ children }) => {
         console.log("post disliked");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
+
+        await GetAllBlog();
+        setLoading(false); // Hide loading spinner
       } else if (data.success === false) {
+        setLoading(false); // Hide loading spinner
+
         console.log("post not disliked");
         console.error("Error liking the post:", data.msg);
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
       }
     } catch (error) {
+      setLoading(false); // Hide loading spinner
+
       console.error("Error dislikeing the post:", error);
     }
   };
@@ -91,6 +113,8 @@ const CreateProvider5 = ({ children }) => {
   // handle from here
 
   const CommentPost = async (postID, comment) => {
+    setCommentLoding(true); // Show loading spinner
+
     // console.log("this is comment body", commentBody);
     // console.log("this is id comment", postID);
 
@@ -116,14 +140,20 @@ const CreateProvider5 = ({ children }) => {
       const data = await response.json();
       // console.log("comment data", data);
       if (data.success === true) {
+        setCommentLoding(false); // Hide loading spinner
+
         console.log("comment posted");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
       } else if (data.success === false) {
+        setCommentLoding(false); // Hide loading spinner
+
         console.log("post Comment failed");
         console.error("Error liking the post:", data.msg);
       }
     } catch (error) {
+      setCommentLoding(false); // Hide loading spinner
+
       console.error("Error commenting the post:", error);
     }
   };
@@ -131,6 +161,8 @@ const CreateProvider5 = ({ children }) => {
   // edit comment here
 
   const handleEdit = async (id, comment) => {
+    setEditcommentLoding(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to Fetch blog again");
@@ -154,14 +186,20 @@ const CreateProvider5 = ({ children }) => {
       const data = await response.json();
       // console.log("Edit comment data", data);
       if (data.success === true) {
+        setEditcommentLoding(false); // Hide loading spinner
+
         console.log("comment Updated");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
       } else if (data.success === false) {
+        setEditcommentLoding(false); // Hide loading spinner
+
         console.log("update Comment failed");
         console.error("Error liking the post:", data.msg);
       }
     } catch (error) {
+      setEditcommentLoding(false); // Hide loading spinner
+
       console.error("Error updaeting the comment:", error);
     }
   };
@@ -169,6 +207,8 @@ const CreateProvider5 = ({ children }) => {
   // handle delete comment here
 
   const DeleteComment = async (commentId) => {
+    setDeletecommentLoding(true); // Show loading spinner
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.warn("Please login to Fetch blog again");
@@ -192,21 +232,37 @@ const CreateProvider5 = ({ children }) => {
       const data = await response.json();
       // console.log("Delete comment data", data);
       if (data.success === true) {
+        setDeletecommentLoding(false); // Hide loading spinner
+
         console.log("comment Deleted");
         setTrackAllBlog((prev) => prev + 1);
         setTrackPublicBlog((prev) => prev + 1);
       } else if (data.success === false) {
+        setDeletecommentLoding(false); // Hide loading spinner
+
         console.log("delete Comment failed");
         console.error("Error liking the post:", data.msg);
       }
     } catch (error) {
+      setDeletecommentLoding(false); // Hide loading spinner
+
       console.error("Error deleting the comment:", error);
     }
   };
 
   return (
     <CreateContext5.Provider
-      value={{ likePost, dislikePost, CommentPost, handleEdit, DeleteComment }}
+      value={{
+        likePost,
+        dislikePost,
+        CommentPost,
+        handleEdit,
+        DeleteComment,
+        loading,
+        commentLoding,
+        editcommentLoding,
+        deletecommentLoding,
+      }}
     >
       {children}
     </CreateContext5.Provider>

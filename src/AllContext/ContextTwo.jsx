@@ -334,6 +334,7 @@ const CreateProvider2 = ({ children }) => {
         setCurrentPage,
         pageCount,
         loading,
+        GetAllBlog,
       }}
     >
       {children}

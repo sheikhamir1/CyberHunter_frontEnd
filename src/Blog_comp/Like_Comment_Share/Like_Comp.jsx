@@ -7,7 +7,8 @@ import { CreateContext4 } from "../../AllContext/ContextFour";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
-import CopyToClipboard from "react-copy-to-clipboard";
+import { LoadingSpinner2 } from "../../Resue_Comp/LodingSpinner_Comp";
+import LoadingSpinner from "../../Resue_Comp/LodingSpinner_Comp";
 
 // bootstrap components
 import Form from "react-bootstrap/Form";
@@ -30,8 +31,17 @@ import { MdDelete } from "react-icons/md";
 function Like_Comp() {
   const { allBlog, setShowAlert, show, serverMsg, setServerMsg } =
     useContext(CreateContext2);
-  const { likePost, dislikePost, CommentPost, handleEdit, DeleteComment } =
-    useContext(CreateContext5);
+  const {
+    likePost,
+    dislikePost,
+    CommentPost,
+    handleEdit,
+    DeleteComment,
+    loading,
+    commentLoding,
+    editcommentLoding,
+    deletecommentLoding,
+  } = useContext(CreateContext5);
   const { publicBlog } = useContext(CreateContext4);
 
   const [showComment, setShowComment] = useState(false);
@@ -167,6 +177,7 @@ function Like_Comp() {
           {serverMsg}
         </Alert>
       )}
+
       <div className="main" style={{ backgroundColor: "#f3d7b475" }}>
         <div
           className="setiup"
@@ -177,10 +188,18 @@ function Like_Comp() {
             style={{
               fontWeight: "bold",
               margin: "10px",
+              display: "flex",
             }}
           >
-            <FcLike style={{ fontSize: "20px" }} />{" "}
-            <strong>{DetailBlog.likeCount}</strong>
+            <FcLike
+              style={{ fontSize: "20px", marginRight: "5px", marginTop: "2px" }}
+            />{" "}
+            {/* <strong>{DetailBlog.likeCount}</strong> */}
+            {loading ? (
+              <LoadingSpinner2 loading={loading} size={15} />
+            ) : (
+              <strong>{DetailBlog.likeCount}</strong>
+            )}
           </div>
         </div>
         <div
@@ -245,15 +264,34 @@ function Like_Comp() {
                 // type="text"
                 rows={3}
                 name="text"
-                {...register("text")}
+                {...register("text", { required: true })}
               />
+
+              {errors.text && (
+                <span
+                  style={{
+                    color: "red",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                    margin: "5px",
+                    padding: "5px",
+                    display: "flex",
+                  }}
+                >
+                  This field is required
+                </span>
+              )}
 
               <Button
                 variant="primary"
                 type="submit"
-                style={{ marginTop: "10px" }}
+                style={{ marginTop: "10px", height: "43px" }}
               >
-                Post Comment
+                {commentLoding ? (
+                  <LoadingSpinner loading={commentLoding} size={30} />
+                ) : (
+                  "Post Comment"
+                )}
               </Button>
             </Form.Group>
 
@@ -301,6 +339,9 @@ function Like_Comp() {
                         handleEditComment(comment._id, comment.comment)
                       }
                     />
+                    {editcommentLoding && (
+                      <LoadingSpinner loading={editcommentLoding} size={30} />
+                    )}
 
                     {editCommentId === comment._id ? (
                       <>
@@ -325,15 +366,20 @@ function Like_Comp() {
                         />
                       </>
                     ) : null}
-                    <MdDelete
-                      style={{
-                        fontSize: "20px",
-                        margin: "10px",
-                        color: "#37a6d1",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleDeleteComment(comment._id)}
-                    />
+
+                    {deletecommentLoding ? (
+                      <LoadingSpinner loading={deletecommentLoding} size={30} />
+                    ) : (
+                      <MdDelete
+                        style={{
+                          fontSize: "20px",
+                          margin: "10px",
+                          color: "#37a6d1",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleDeleteComment(comment._id)}
+                      />
+                    )}
 
                     <strong style={{ fontSize: "12px" }}>
                       Commented on : {createdAt}
