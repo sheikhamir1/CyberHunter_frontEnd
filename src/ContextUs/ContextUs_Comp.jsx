@@ -36,7 +36,6 @@ function ContextUs_Comp() {
           lineHeight: "1.5",
           wordWrap: "break-word",
           textIndent: "10px",
-          textShadow: "1px 1px 1px black",
         }}
       >
         if you have any queries or suggestions please contact us, if you find a
