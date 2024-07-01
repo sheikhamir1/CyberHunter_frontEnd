@@ -10,7 +10,7 @@ import { CreateProvider6 } from "./AllContext/ContextSix";
 // libraries
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// user components
+// user components here
 import MyLogin from "./User_Comp/Login_Comp";
 import MyRegister from "./User_Comp/Register_Comp";
 import ResetPassword_Comp from "./Profile/ResetPassword/ResetPassword_Comp";
