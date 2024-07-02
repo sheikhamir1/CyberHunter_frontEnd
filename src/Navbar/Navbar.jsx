@@ -78,35 +78,36 @@ function MyNavbar() {
               <Nav.Link className="nav-link">Home</Nav.Link>
               <Nav.Link className="nav-link">About</Nav.Link>
               {isLoggedIn ? (
-                <NavDropdown
-                  title={
-                    <>
-                      Profile <CgProfile />
-                    </>
-                  }
-                  id="basic-nav-dropdown"
-                >
-                  {/* <CgProfile /> */}
-                  <NavDropdown.Item as={Link} to="/createblog">
-                    Create New Blog
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/allblog">
-                    View Your Blogs
-                  </NavDropdown.Item>
-                  {/* <NavDropdown.Item as={Link} to="/createprofile">
-                    Create New Profile
-                  </NavDropdown.Item> */}
-                  <NavDropdown.Item as={Link} to="/profile">
-                    view Profile
-                  </NavDropdown.Item>
+                <>
+                  <NavDropdown
+                    title={
+                      <>
+                        Profile <CgProfile />
+                      </>
+                    }
+                    id="basic-nav-dropdown"
+                  >
+                    {/* <CgProfile /> */}
+                    <NavDropdown.Item as={Link} to="/createblog">
+                      Create New Blog
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/allblog">
+                      View Your Blogs
+                    </NavDropdown.Item>
 
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item>testing</NavDropdown.Item>
-                </NavDropdown>
+                    <NavDropdown.Item as={Link} to="/profile">
+                      view Profile
+                    </NavDropdown.Item>
+
+                    {/* <NavDropdown.Divider />
+                    <NavDropdown.Item>testing</NavDropdown.Item> */}
+                  </NavDropdown>
+
+                  <Nav.Link className="nav-link" as={Link} to="/ContextUs_Comp">
+                    Context Us
+                  </Nav.Link>
+                </>
               ) : null}
-              <Nav.Link className="nav-link" as={Link} to="/ContextUs_Comp">
-                Context Us
-              </Nav.Link>
             </Nav>
 
             <Form className="d-flex" onSubmit={handleSubmit(onSubmit)}>

@@ -94,3 +94,20 @@ ul.pagination {
   width: 100%;
   bottom: 0px;
 }
+/* @media (max-width: 600px) {
+  .img {
+    width: 100%;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .img {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1201px) {
+  .img {
+    width: 25%;
+  }
+} */
