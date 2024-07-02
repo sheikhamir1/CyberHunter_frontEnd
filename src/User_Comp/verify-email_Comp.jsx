@@ -15,7 +15,7 @@ function Verify_email() {
   }, []);
   const fetchMsg = async () => {
     const response = await fetch(
-      `https://cyberhunter-backendend-1.onrender.com/api/user/Verify_email/${token}`
+      `${import.meta.env.VITE_API_URL}/api/user/Verify_email/${token}`
     );
     const data = await response.json();
     console.log(data);
