@@ -37,6 +37,7 @@ import MyNavbar from "./Navbar/Navbar";
 import MyHomePage from "./Home/HomePage";
 import Search_Comp from "./Navbar/Search_Comp";
 import ContextUs_Comp from "./ContextUs/ContextUs_Comp";
+import TestComp from "./Resue_Comp/TestComp";
 
 function App() {
   return (
@@ -107,6 +108,7 @@ function App() {
                           path="/ContextUs_Comp"
                           element={<ContextUs_Comp />}
                         />
+                        <Route path="testcomp" element={<TestComp />} />
                       </Routes>
                     </CreateProvider7>
                   </CreateProvider6>
