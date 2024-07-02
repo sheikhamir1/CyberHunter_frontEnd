@@ -58,7 +58,7 @@ function SinglePublicBlog() {
               // className="AllBlogImageSetup"
               style={{
                 maxWidth: "-webkit-fill-available",
-                width: "500px",
+                // width: "500px",
               }}
             />
             <Card.Text
