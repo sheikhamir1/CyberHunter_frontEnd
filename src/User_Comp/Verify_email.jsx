@@ -7,7 +7,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 // icons
 import { TiTick } from "react-icons/ti";
 
-function Verify_email() {
+function Verifyemail() {
   const { token } = useParams();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ function Verify_email() {
   }, []);
   const fetchMsg = async () => {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/user/verify-email/${token}`
+      `${import.meta.env.VITE_API_URL}/api/user/verifyemail/${token}`
     );
     const data = await response.json();
     console.log(data);
@@ -70,4 +70,4 @@ function Verify_email() {
   );
 }
 
-export default Verify_email;
+export default Verifyemail;
