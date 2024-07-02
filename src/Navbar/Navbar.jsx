@@ -50,7 +50,7 @@ function MyNavbar() {
 
   const onSubmit = async (data) => {
     // console.log(data);
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("token") === !undefined) {
       Search(data.search);
       navigate("/Search_Comp");
       reset();

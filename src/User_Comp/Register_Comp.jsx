@@ -61,11 +61,7 @@ function MyRegister() {
       // console.log(postResponse);
       if (postResponse.success === true) {
         setLoading(false); // Hide loading spinner
-
         console.log("user registered");
-        const JWT_token = postResponse.authToken;
-        // console.log("this is auth token", JWT_token);
-        localStorage.setItem("token", JWT_token);
         const serverMSG = postResponse.message;
         setShowAlert(true);
         setTimeout(() => {
