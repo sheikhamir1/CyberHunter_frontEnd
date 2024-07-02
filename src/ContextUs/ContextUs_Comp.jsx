@@ -1,10 +1,25 @@
-import React from "react";
+// all hooks
+import React, { useContext } from "react";
+import { CreateContext7 } from "../AllContext/ContextSeven";
+
+// libraries
+import LoadingSpinner from "../Resue_Comp/LodingSpinner_Comp";
+
+// bootstrap components
+import Alert from "react-bootstrap/Alert";
+
+// css
 import "./ContextUs.css";
+
+// other components
 import ProfileNavbar_Comp from "../Profile/ProfileNavbar_Comp";
 
 import { useForm } from "react-hook-form";
 
 function ContextUs_Comp() {
+  const { PostFeedBack, show, errorShow, serverMsg, serverError, loading } =
+    useContext(CreateContext7);
+
   const {
     register,
     handleSubmit,
@@ -13,13 +28,32 @@ function ContextUs_Comp() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
 
-    // reset();
+    const feecbackData = {
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      subject: data.subject,
+    };
+
+    PostFeedBack(feecbackData);
+    reset();
   };
+
   return (
     <>
       <ProfileNavbar_Comp />
+      {show && (
+        <Alert variant="success" style={{ textAlign: "center", margin: "0px" }}>
+          {serverMsg}
+        </Alert>
+      )}
+      {errorShow && (
+        <Alert variant="danger" style={{ textAlign: "center", margin: "0px" }}>
+          {serverError}
+        </Alert>
+      )}
       <h2
         style={{
           textAlign: "center",
@@ -30,7 +64,7 @@ function ContextUs_Comp() {
           color: "#444",
           fontFamily: "cursive",
           fontStyle: "italic",
-          textShadow: "1px 1px 1px black",
+          // textShadow: "1px 1px 1px black",
           letterSpacing: "2px",
           wordSpacing: "5px",
           lineHeight: "1.5",
@@ -42,12 +76,14 @@ function ContextUs_Comp() {
         bug please report, if you found any problem please report we will solve
         it as soon as possible !😊
       </h2>
+      {loading && <LoadingSpinner loading={loading} />}
       <div className="set">
         <form className="custom-form1" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
               id="name"
+              name="name"
               {...register("name", { required: "Name is required" })}
               className={errors.name ? "input-error" : ""}
             />
@@ -60,6 +96,7 @@ function ContextUs_Comp() {
             <label htmlFor="email">Email</label>
             <input
               id="email"
+              name="email"
               {...register("email", {
                 required: "Email is required",
                 pattern: {
@@ -75,9 +112,26 @@ function ContextUs_Comp() {
           </div>
 
           <div className="form-group">
+            <label htmlFor="text">Subject</label>
+            <input
+              id="subject"
+              name="subject"
+              {...register("subject", {
+                required: "Subject is required",
+                message: "Invalid Subject address",
+              })}
+              className={errors.Subject ? "input-error" : ""}
+            />
+            {errors.Subject && (
+              <p className="error-message">{errors.Subject.message}</p>
+            )}
+          </div>
+
+          <div className="form-group">
             <label htmlFor="message">Message</label>
             <textarea
               id="message"
+              name="message"
               {...register("message", { required: "Message is required" })}
               className={errors.message ? "input-error" : ""}
             />
@@ -87,7 +141,7 @@ function ContextUs_Comp() {
           </div>
 
           <button className="setbtnContext" type="submit">
-            Submit
+            Give Feedback
           </button>
         </form>
       </div>

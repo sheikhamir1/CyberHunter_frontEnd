@@ -6,6 +6,7 @@ import { CreateProvider3 } from "./AllContext/ContextThree";
 import { CreateProvider4 } from ".//AllContext/ContextFour";
 import { CreateProvider5 } from "./AllContext/ContextFive";
 import { CreateProvider6 } from "./AllContext/ContextSix";
+import { CreateProvider7 } from "./AllContext/ContextSeven";
 
 // libraries
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -47,62 +48,67 @@ function App() {
               <CreateProvider2>
                 <CreateProvider5>
                   <CreateProvider6>
-                    <MyNavbar />
-                    <Routes>
-                      <Route path="/" element={<MyHomePage />} />
-                      <Route path="/login" element={<MyLogin />} />
-                      <Route path="/register" element={<MyRegister />} />
-                      <Route path="/createblog/:id" element={<CreateBlog />} />
-                      <Route path="/createblog" element={<CreateBlog />} />
-                      <Route path="/allblog/" element={<AllBlog />} />
-                      <Route
-                        path="/SingleBlogPage/:id"
-                        element={<SingleBlogPage />}
-                      />
-                      <Route
-                        path="/SinglePublicBlog/:id"
-                        element={<SinglePublicBlog />}
-                      />
-                      <Route path="/updateblog" element={<UpdateBlog />} />
-                      <Route
-                        path="/updateprofile"
-                        element={<UpdateProfile />}
-                      />
-                      <Route
-                        path="/CreateProfile"
-                        element={<CreateProfile />}
-                      ></Route>
-                      <Route path="/profile" element={<Profile />} />
-                      <Route
-                        path="/UpdateEmail_Comp"
-                        element={<UpdateEmail_Comp />}
-                      />
-                      <Route path="/Search_Comp" element={<Search_Comp />} />
-                      <Route
-                        path="/ResetPassword_Comp"
-                        element={<ResetPassword_Comp />}
-                      />
-                      <Route
-                        path="/NewPassword_Comp/:token"
-                        element={<NewPassword_Comp />}
-                      />
-                      <Route
-                        path="/resend-token"
-                        element={<ResendToken_Comp />}
-                      />
-                      <Route
-                        path="/verify_email/:token"
-                        element={<Verify_email />}
-                      />
-                      <Route
-                        path="blogsCategory/:category"
-                        element={<BlogsCategory />}
-                      />
-                      <Route
-                        path="/ContextUs_Comp"
-                        element={<ContextUs_Comp />}
-                      />
-                    </Routes>
+                    <CreateProvider7>
+                      <MyNavbar />
+                      <Routes>
+                        <Route path="/" element={<MyHomePage />} />
+                        <Route path="/login" element={<MyLogin />} />
+                        <Route path="/register" element={<MyRegister />} />
+                        <Route
+                          path="/createblog/:id"
+                          element={<CreateBlog />}
+                        />
+                        <Route path="/createblog" element={<CreateBlog />} />
+                        <Route path="/allblog/" element={<AllBlog />} />
+                        <Route
+                          path="/SingleBlogPage/:id"
+                          element={<SingleBlogPage />}
+                        />
+                        <Route
+                          path="/SinglePublicBlog/:id"
+                          element={<SinglePublicBlog />}
+                        />
+                        <Route path="/updateblog" element={<UpdateBlog />} />
+                        <Route
+                          path="/updateprofile"
+                          element={<UpdateProfile />}
+                        />
+                        <Route
+                          path="/CreateProfile"
+                          element={<CreateProfile />}
+                        ></Route>
+                        <Route path="/profile" element={<Profile />} />
+                        <Route
+                          path="/UpdateEmail_Comp"
+                          element={<UpdateEmail_Comp />}
+                        />
+                        <Route path="/Search_Comp" element={<Search_Comp />} />
+                        <Route
+                          path="/ResetPassword_Comp"
+                          element={<ResetPassword_Comp />}
+                        />
+                        <Route
+                          path="/NewPassword_Comp/:token"
+                          element={<NewPassword_Comp />}
+                        />
+                        <Route
+                          path="/resend-token"
+                          element={<ResendToken_Comp />}
+                        />
+                        <Route
+                          path="/verify_email/:token"
+                          element={<Verify_email />}
+                        />
+                        <Route
+                          path="blogsCategory/:category"
+                          element={<BlogsCategory />}
+                        />
+                        <Route
+                          path="/ContextUs_Comp"
+                          element={<ContextUs_Comp />}
+                        />
+                      </Routes>
+                    </CreateProvider7>
                   </CreateProvider6>
                 </CreateProvider5>
               </CreateProvider2>
