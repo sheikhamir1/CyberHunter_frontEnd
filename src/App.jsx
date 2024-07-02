@@ -96,7 +96,7 @@ function App() {
                           element={<ResendToken_Comp />}
                         />
                         <Route
-                          path="/verify_email/:token"
+                          path="/Verify_email/:token"
                           element={<Verify_email />}
                         />
                         <Route
