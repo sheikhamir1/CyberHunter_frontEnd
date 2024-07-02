@@ -17,7 +17,7 @@ import MyRegister from "./User_Comp/Register_Comp";
 import ResetPassword_Comp from "./Profile/ResetPassword/ResetPassword_Comp";
 import NewPassword_Comp from "./Profile/ResetPassword/NewPassword_Comp";
 import ResendToken_Comp from "./User_Comp/ResendToken_Comp";
-import Verify_email from "./User_Comp/verify-email_Comp";
+import Verify_email from "./User_Comp/Verify_email";
 
 // blog components
 import CreateBlog from "./Blog_comp/CreateBlog";
